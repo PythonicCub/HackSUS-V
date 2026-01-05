@@ -1,7 +1,36 @@
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Info, FileText, Layers, Mail } from "lucide-react";
+import { FloatingDock } from "@/components/ui/floating-dock";
 
 const HeroSection = () => {
+  const dockItems = [
+    {
+      title: "About",
+      icon: <Info className="h-full w-full" />,
+      href: "#about",
+    },
+    {
+      title: "Details",
+      icon: <FileText className="h-full w-full" />,
+      href: "#details",
+    },
+    {
+      title: "Home",
+      icon: <img src="/hacksus_logo.svg" alt="HackS'US" className="h-full w-full object-contain scale-[2]" />,
+      href: "#",
+    },
+    {
+      title: "Tracks",
+      icon: <Layers className="h-full w-full" />,
+      href: "#tracks",
+    },
+    {
+      title: "Contact",
+      icon: <Mail className="h-full w-full" />,
+      href: "#footer",
+    },
+  ];
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden scanlines pt-16 pb-30">
       {/* Background effects */}
@@ -87,6 +116,11 @@ const HeroSection = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Floating Dock */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+        <FloatingDock items={dockItems} />
       </div>
 
       {/* Scroll indicator

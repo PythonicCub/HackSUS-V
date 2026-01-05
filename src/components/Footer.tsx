@@ -10,7 +10,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative py-16 border-t border-border">
+    <footer id="footer" className="relative py-16 border-t border-border">
       <div className="container px-6">
         <div className="grid md:grid-cols-3 gap-12 items-center">
           {/* Logo and tagline */}
@@ -23,7 +23,7 @@ const Footer = () => {
 
           {/* ASCII Art */}
           <div className="hidden md:block font-mono text-xs text-muted-foreground/50 text-center whitespace-pre leading-none">
-{`   _____
+            {`   _____
   |     |
   | [_] |
   |_____|
