@@ -29,9 +29,10 @@ const Navbar = () => {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <a href="#" className="font-display text-2xl text-primary tracking-wider">
-            HACK<span className="text-foreground">S'US</span>
-          </a>
+          {/* <a href="#" className="font-display text-2xl text-primary tracking-wider">
+            HACK<span className="text-foreground">S'US</span> */}
+          <img src="hacksus_logo.svg" className="h-12 "></img>
+          {/* </a> */}
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
@@ -88,7 +89,7 @@ const Navbar = () => {
           </div>
         )}
       </div>
-    </nav>
+    </nav >
   );
 };
 
