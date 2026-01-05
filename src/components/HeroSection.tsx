@@ -6,8 +6,7 @@ const HeroSection = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden scanlines">
       {/* Background effects */}
       <div className="absolute inset-0 bg-gradient-radial from-primary/10 via-transparent to-transparent" />
-      <div className="absolute inset-0 bg-grid-pattern bg-grid opacity-30" />
-      
+
       {/* Floating particles */}
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(20)].map((_, i) => (
@@ -38,10 +37,9 @@ const HeroSection = () => {
           </span>
         </div>
 
-        {/* Main title with glitch effect */}
+        {/* Main title */}
         <h1
-          className="glitch font-display text-7xl md:text-9xl lg:text-[12rem] text-foreground leading-none tracking-wider mb-4 animate-fade-in"
-          data-text="HACK S'US"
+          className="font-display text-7xl md:text-9xl lg:text-[12rem] text-foreground leading-none tracking-wider mb-4 animate-fade-in"
           style={{ animationDelay: "0.4s" }}
         >
           HACK<span className="text-primary">S'US</span>
@@ -52,7 +50,7 @@ const HeroSection = () => {
           className="font-body text-xl md:text-2xl text-muted-foreground mb-2 animate-fade-in"
           style={{ animationDelay: "0.6s" }}
         >
-          Where Code Meets Chaos
+          India's First AI Workflow Hackathon
         </p>
 
         {/* Date */}
@@ -60,13 +58,13 @@ const HeroSection = () => {
           className="font-mono text-lg text-primary mb-12 animate-fade-in"
           style={{ animationDelay: "0.8s" }}
         >
-          MARCH 15-17, 2025
+          MARCH 6-8, 2026
         </p>
 
         {/* CTA Button */}
         <div className="animate-fade-in" style={{ animationDelay: "1s" }}>
           <Button variant="hero" size="xl">
-            <span className="relative z-10">CLAIM YOUR SPOT</span>
+            <span className="relative z-10">Pre-Register Now</span>
           </Button>
         </div>
 
@@ -76,9 +74,9 @@ const HeroSection = () => {
           style={{ animationDelay: "1.2s" }}
         >
           {[
-            { value: "36", label: "HOURS" },
+            { value: "42", label: "HOURS" },
             { value: "500+", label: "HACKERS" },
-            { value: "$50K", label: "IN PRIZES" },
+            { value: "₹1,00,000", label: "IN PRIZES" },
           ].map((stat, i) => (
             <div key={i} className="text-center">
               <div className="font-display text-4xl md:text-5xl text-primary">{stat.value}</div>
@@ -88,14 +86,14 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator
       <a
         href="#about"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground hover:text-primary transition-colors animate-bounce"
         aria-label="Scroll to content"
       >
         <ChevronDown size={32} />
-      </a>
+      </a> */}
     </section>
   );
 };

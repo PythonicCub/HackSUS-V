@@ -1,33 +1,33 @@
-import { Brain, Blocks, HeartPulse, Leaf, Lightbulb } from "lucide-react";
+import { FolderCode, Plug2, CircuitBoard, Hammer, Clapperboard } from "lucide-react";
 
 const tracks = [
   {
-    icon: Brain,
-    title: "AI & MACHINE LEARNING",
-    description: "Build intelligent systems that learn and adapt. From neural networks to natural language processing.",
+    icon: FolderCode,
+    title: "Software",
+    description: "Integrate AI into workflows to make them more efficient",
     color: "from-primary to-accent",
   },
   {
-    icon: Blocks,
-    title: "BLOCKCHAIN & WEB3",
+    icon: CircuitBoard,
+    title: "Electronics",
     description: "Decentralize the future. Smart contracts, DeFi, and next-gen distributed applications.",
     color: "from-accent to-neon",
   },
   {
-    icon: HeartPulse,
-    title: "HEALTHTECH",
+    icon: Plug2,
+    title: "EEE & Instrumentation",
     description: "Revolutionize healthcare. Diagnostics, wellness, and patient care innovations.",
     color: "from-primary to-crimson",
   },
   {
-    icon: Leaf,
-    title: "SUSTAINABILITY",
+    icon: Hammer,
+    title: "Civil & Mechanical",
     description: "Code for the planet. Climate tech, green energy, and environmental solutions.",
     color: "from-scanline/50 to-primary",
   },
   {
-    icon: Lightbulb,
-    title: "OPEN INNOVATION",
+    icon: Clapperboard,
+    title: "Film & Music",
     description: "No limits. Bring any idea that challenges conventions and breaks boundaries.",
     color: "from-primary to-accent",
   },
@@ -56,13 +56,12 @@ const TracksSection = () => {
           {tracks.map((track, i) => (
             <div
               key={i}
-              className={`group relative bg-card border border-border p-8 hover-glow transition-all duration-500 ${
-                i === tracks.length - 1 ? "lg:col-start-2" : ""
-              }`}
+              className={`group relative bg-card border border-border p-8 hover-glow transition-all duration-500 ${i === tracks.length - 1 ? "lg:col-start-2" : ""
+                }`}
             >
               {/* Gradient overlay on hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${track.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-              
+
               {/* Content */}
               <div className="relative z-10">
                 {/* Icon with glow */}
