@@ -95,7 +95,7 @@ const HeroSection = () => {
           {/* Location */}
           <div className="flex items-center justify-start gap-4 font-mono text-lg text-primary">
             <MapPin size={20} className="flex-shrink-0" />
-            <p className="text-left">Rajagiri School of Engineering & Techonology, Kochi</p>
+            <p className="text-left">Rajagiri School of Engineering & Techonology (Autonomous), Kochi</p>
           </div>
         </div>
 
