@@ -13,6 +13,7 @@ import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
 import ResponsiveParticles from "@/components/ResponsiveParticles";
+import DecryptedText from "@/components/DecryptedText";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -169,28 +170,51 @@ function useActiveSection(sectionIds: string[]) {
   const [active, setActive] = useState(sectionIds[0] ?? "");
 
   useEffect(() => {
-    const elements = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => Boolean(el));
-    if (elements.length === 0) return;
+    const items = sectionIds
+      .map((id) => ({ id, el: document.getElementById(id) }))
+      .filter((x): x is { id: string; el: HTMLElement } => Boolean(x.el));
+    if (items.length === 0) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0));
-        const nextId = (visible[0]?.target as HTMLElement | undefined)?.id;
-        if (nextId) setActive(nextId);
-      },
-      {
-        root: null,
-        rootMargin: "-35% 0px -60% 0px",
-        threshold: [0, 0.1, 0.2, 0.3, 0.4],
-      },
-    );
+    let rafId = 0;
+    const navOffset = 84; // navbar height + breathing room
 
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    const compute = () => {
+      // Pick the section whose midpoint is closest to a "focus line" inside the viewport.
+      // This makes the active underline feel immediate when scrolling up/down (no need to
+      // wait for a section to hit the exact top).
+      const focusY = navOffset + window.innerHeight * 0.36;
+      let bestId = items[0]?.id ?? "";
+      let bestDist = Number.POSITIVE_INFINITY;
+
+      for (const it of items) {
+        const rect = it.el.getBoundingClientRect();
+        const mid = rect.top + rect.height / 2;
+        const dist = Math.abs(mid - focusY);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestId = it.id;
+        }
+      }
+
+      setActive((prev) => (prev === bestId ? prev : bestId));
+    };
+
+    const schedule = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(() => {
+        rafId = 0;
+        compute();
+      });
+    };
+
+    compute();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      if (rafId) window.cancelAnimationFrame(rafId);
+    };
   }, [sectionIds]);
 
   return active;
@@ -202,7 +226,7 @@ function SectionHeading({
   description,
 }: {
   eyebrow: string;
-  title: string;
+  title: React.ReactNode;
   description?: string;
 }) {
   return (
@@ -213,13 +237,10 @@ function SectionHeading({
       transition={{ duration: 0.55, ease: "easeOut" }}
       className="text-center mb-10 md:mb-12"
     >
-      <div className="flex items-center justify-center gap-2">
-        <span className="font-mono text-xs tracking-[0.35em] text-muted-foreground">
-          {eyebrow}
-        </span>
-        <span className="h-px w-10 bg-border" />
-      </div>
-      <h2 className="mt-4 font-display text-4xl md:text-5xl tracking-wide">
+      <span className="font-mono text-sm text-primary tracking-[0.3em]">
+        // {eyebrow}
+      </span>
+      <h2 className="font-display text-5xl md:text-6xl text-foreground mt-4">
         {title}
       </h2>
       {description ? (
@@ -241,11 +262,11 @@ function GlassCard({
   return (
     <Card
       className={cn(
-        "relative overflow-hidden rounded-2xl border-border/60 bg-card/55 backdrop-blur-md shadow-[0_18px_60px_rgba(0,0,0,0.55)]",
+        "relative overflow-hidden rounded-none card-beveled border-border bg-card shadow-[0_18px_60px_rgba(0,0,0,0.45)]",
         className,
       )}
     >
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.06] to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent" />
       <div className="relative">{children}</div>
     </Card>
   );
@@ -303,11 +324,15 @@ function CarbonXNavbar({
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 w-full">
-      <div className="bg-background/40 backdrop-blur-xl border-b border-border/60">
+      <div className="bg-background/80 backdrop-blur-xl border-b border-border">
         <div className="container max-w-6xl px-6">
           <div className="h-16 flex items-center justify-between gap-6">
             <a
               href="#top"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate("top");
+              }}
               className="font-mono tracking-[0.32em] text-sm text-foreground/90 hover:text-foreground transition-colors"
               aria-label="Go to top"
             >
@@ -320,7 +345,7 @@ function CarbonXNavbar({
             >
               <motion.div
                 aria-hidden="true"
-                className="absolute -bottom-2 h-0.5 bg-primary shadow-[0_0_18px_hsl(var(--primary)/0.35)]"
+                className="absolute -bottom-2 h-0.5 bg-primary shadow-[0_0_18px_hsl(var(--primary)/0.35)] will-change-[left,width]"
                 animate={{
                   left: indicator.left,
                   width: indicator.width,
@@ -353,12 +378,10 @@ function CarbonXNavbar({
 
             <div className="flex items-center gap-3">
               <Button
-                asChild
-                className="rounded-full px-5 h-9 bg-scanline text-black hover:bg-scanline/90 shadow-[0_0_28px_hsl(var(--scanline-green)/0.25)]"
+                onClick={() => onNavigate("register")}
+                className="rounded-xl px-6 h-9 font-display tracking-wider text-sm shadow-[0_10px_30px_hsl(var(--primary)/0.18)]"
               >
-                <a href="#register">
-                  REGISTER NOW <ArrowRight className="ml-1" />
-                </a>
+                REGISTER NOW <ArrowRight className="ml-1" />
               </Button>
             </div>
           </div>
@@ -419,26 +442,24 @@ const CarbonX = () => {
               "radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%)",
           }}
         />
-        <div className="landing-bg-particles absolute inset-0">
-          <ResponsiveParticles
-            minWidth={768}
-            className="absolute inset-0"
-            particleColors={particleColors}
-            particleCount={240}
-            particleSpread={12}
-            speed={0.16}
-            particleBaseSize={170}
-            sizeRandomness={0.65}
-            moveParticlesOnHover={true}
-            hoverMode="window"
-            particleHoverFactor={2.2}
-            moveParticlesOnDeviceOrientation={true}
-            deviceOrientationFactor={2.4}
-            alphaParticles={true}
-            disableRotation={false}
-            pixelRatio={1}
-          />
-        </div>
+        <ResponsiveParticles
+          minWidth={768}
+          className="landing-bg-particles absolute inset-0"
+          particleColors={particleColors}
+          particleCount={240}
+          particleSpread={12}
+          speed={0.16}
+          particleBaseSize={170}
+          sizeRandomness={0.65}
+          moveParticlesOnHover={true}
+          moveParticlesOnDeviceOrientation={true}
+          deviceOrientationFactor={2.4}
+          particleHoverFactor={2.2}
+          hoverMode="window"
+          alphaParticles={true}
+          disableRotation={false}
+          pixelRatio={1}
+        />
         <div className="absolute inset-0 bg-gradient-radial from-white/[0.05] via-transparent to-transparent" />
         <div
           className="absolute inset-0"
@@ -482,7 +503,16 @@ const CarbonX = () => {
 
               <div className="mt-7">
                 <div className="font-mono text-4xl sm:text-5xl md:text-6xl tracking-[0.18em] text-foreground">
-                  {carbonX.prizeAmount}
+                  <DecryptedText
+                    text={carbonX.prizeAmount}
+                    animateOn="view"
+                    speed={60}
+                    maxIterations={20}
+                    parentClassName="font-mono tracking-[0.18em]"
+                    className="text-foreground"
+                    encryptedClassName="text-foreground/55"
+                    aria-label={carbonX.prizeAmount}
+                  />
                 </div>
                 <div className="mt-2 font-mono text-[10px] tracking-[0.56em] text-muted-foreground">
                   {carbonX.prizeCaption}
@@ -498,17 +528,17 @@ const CarbonX = () => {
 
               <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <Button
-                  asChild
-                  className="rounded-full px-7 h-11 bg-scanline text-black hover:bg-scanline/90 shadow-[0_0_34px_hsl(var(--scanline-green)/0.22)]"
+                  onClick={() => scrollToSection("register")}
+                  className="rounded-xl px-7 h-11 font-display tracking-wider shadow-[0_14px_42px_hsl(var(--primary)/0.18)]"
                 >
-                  <a href="#register">REGISTER NOW</a>
+                  REGISTER NOW
                 </Button>
                 <Button
-                  asChild
                   variant="outline"
-                  className="rounded-full px-7 h-11 bg-background/10 border-border/60 hover:bg-background/20"
+                  onClick={() => scrollToSection("about")}
+                  className="rounded-xl px-7 h-11 bg-background/10 border-border/60 hover:bg-background/20"
                 >
-                  <a href="#about">LEARN MORE</a>
+                  LEARN MORE
                 </Button>
               </div>
 
@@ -519,7 +549,7 @@ const CarbonX = () => {
                 transition={{ duration: 0.55, ease: "easeOut" }}
                 className="mt-14"
               >
-                <div className="mx-auto max-w-4xl rounded-2xl border border-border/60 bg-background/10 backdrop-blur-md px-5 py-5">
+                <div className="mx-auto max-w-4xl rounded-none card-beveled border border-border bg-card px-5 py-5">
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-0">
                     {carbonX.stats.map((s, idx) => (
                       <div
@@ -594,8 +624,8 @@ const CarbonX = () => {
                 </div>
               </div>
 
-              <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-background/10 p-6 backdrop-blur-md">
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent" />
+              <div className="relative overflow-hidden rounded-none card-beveled border border-border bg-card p-6">
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-80" />
                 <div className="relative">
                   <div className="font-mono text-[11px] tracking-[0.38em] text-muted-foreground">
                     REGISTER NOW
@@ -606,7 +636,7 @@ const CarbonX = () => {
                   </p>
                   <div className="mt-6">
                     <Button
-                      className="rounded-full px-6 h-10 bg-scanline text-black hover:bg-scanline/90"
+                      className="rounded-xl px-6 h-10 font-display tracking-wider shadow-[0_12px_36px_hsl(var(--primary)/0.16)]"
                       type="button"
                     >
                       REGISTER NOW <ArrowRight className="ml-1" />
@@ -624,7 +654,11 @@ const CarbonX = () => {
         <div className="container max-w-6xl px-6">
           <SectionHeading
             eyebrow="ABOUT"
-            title="Built for builders."
+            title={
+              <>
+                Built for <span className="text-primary">builders.</span>
+              </>
+            }
             description="A national hackathon designed to move fast, build practical demos, and ship impact."
           />
 
@@ -656,7 +690,11 @@ const CarbonX = () => {
         <div className="container max-w-6xl px-6">
           <SectionHeading
             eyebrow="EXPERIENCE"
-            title="A focused 42-hour arc."
+            title={
+              <>
+                A focused <span className="text-primary">42-hour</span> arc.
+              </>
+            }
             description="No rigid agenda — just a high-signal build experience with expert support."
           />
 
@@ -708,7 +746,11 @@ const CarbonX = () => {
         <div className="container max-w-6xl px-6">
           <SectionHeading
             eyebrow="TRACKS"
-            title="Pick a track. Build something real."
+            title={
+              <>
+                Pick a <span className="text-primary">track.</span> Build something real.
+              </>
+            }
             description="Each track has its own focus — keep it practical, high-impact, and demo-ready."
           />
 
@@ -758,7 +800,11 @@ const CarbonX = () => {
         <div className="container max-w-6xl px-6">
           <SectionHeading
             eyebrow="WHY IT MATTERS"
-            title="Signal, not noise."
+            title={
+              <>
+                Signal, not <span className="text-primary">noise.</span>
+              </>
+            }
             description="A hackathon designed to connect people, products, and opportunities."
           />
 
@@ -773,7 +819,7 @@ const CarbonX = () => {
               >
                 <GlassCard className="p-6">
                   <div className="flex items-start gap-3">
-                    <div className="h-10 w-10 rounded-2xl border border-border/60 bg-background/15 flex items-center justify-center">
+                    <div className="h-10 w-10 border border-primary/30 bg-primary/10 flex items-center justify-center">
                       <Check className="h-5 w-5 text-primary" />
                     </div>
                     <div className="font-display text-xl tracking-wide">
@@ -792,7 +838,11 @@ const CarbonX = () => {
         <div className="container max-w-6xl px-6">
           <SectionHeading
             eyebrow="PARTNERSHIPS"
-            title="Support the build."
+            title={
+              <>
+                Support the <span className="text-primary">build.</span>
+              </>
+            }
             description="Partner with CarbonX across tracks, prizes, logistics, and talent engagement."
           />
 
@@ -818,7 +868,7 @@ const CarbonX = () => {
           </div>
 
           <div className="mt-10">
-            <div className="mx-auto max-w-3xl rounded-2xl border border-border/60 bg-background/10 backdrop-blur-md px-6 py-5 text-center">
+            <div className="mx-auto max-w-3xl rounded-none card-beveled border border-border bg-card px-6 py-5 text-center">
               <div className="font-mono text-xs tracking-[0.38em] text-muted-foreground">
                 PRIZES
               </div>
@@ -865,7 +915,11 @@ const CarbonX = () => {
         <div className="container max-w-4xl px-6">
           <SectionHeading
             eyebrow="FAQ"
-            title="Quick answers."
+            title={
+              <>
+                Quick <span className="text-primary">answers.</span>
+              </>
+            }
             description="A few common questions — final details will be shared with registrations."
           />
 
@@ -895,7 +949,11 @@ const CarbonX = () => {
         <div className="container max-w-6xl px-6">
           <SectionHeading
             eyebrow="CONTACT INFORMATION"
-            title="Get in touch."
+            title={
+              <>
+                Get in <span className="text-primary">touch.</span>
+              </>
+            }
           />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
@@ -937,7 +995,7 @@ const CarbonX = () => {
         {/* Footer */}
         <footer className="relative py-10 md:py-12">
         <div className="container max-w-6xl px-6">
-          <div className="rounded-2xl border border-border/60 bg-background/10 backdrop-blur-md p-6 md:p-8 text-center">
+          <div className="rounded-none card-beveled border border-border bg-card p-6 md:p-8 text-center">
             <p className="text-sm text-muted-foreground leading-relaxed">
               {carbonX.organizer}
             </p>

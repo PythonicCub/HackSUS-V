@@ -338,8 +338,9 @@
 
 .landing-bg-particles canvas {
   mix-blend-mode: screen;
-  opacity: 0.9;
-  filter: blur(0.6px) drop-shadow(0 0 18px rgba(255, 255, 255, 0.12)) drop-shadow(0 0 34px rgba(255, 49, 46, 0.08));
+  opacity: 0.95;
+  filter: blur(0.2px) drop-shadow(0 0 16px rgba(255, 255, 255, 0.16))
+    drop-shadow(0 0 28px rgba(255, 255, 255, 0.12));
 }
 
 @layer utilities {
