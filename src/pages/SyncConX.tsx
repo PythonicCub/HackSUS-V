@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const CarbonX = () => {
+const SyncConX = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -24,12 +24,12 @@ const CarbonX = () => {
 
                     {/* Header */}
                     <div className="mb-16 text-center">
-                        <span className="font-mono text-sm text-primary tracking-[0.3em]">// TRACK 02</span>
+                        <span className="font-mono text-sm text-primary tracking-[0.3em]">// TRACK 03</span>
                         <h1 className="font-display text-5xl md:text-6xl text-foreground mt-4">
-                            CARBONX <div className="text-primary">(Electronics)</div>
+                            SYNCCONX <div className="text-primary">(EEE & Instrumentation)</div>
                         </h1>
                         <p className="text-xl text-muted-foreground mt-6 max-w-2xl mx-auto text-center">
-                            Build AI-enabled electronic systems that rethink and optimize everyday workflows
+                            Create data-driven electrical and instrumentation systems for smarter, more efficient workflows
                         </p>
                     </div>
 
@@ -41,32 +41,32 @@ const CarbonX = () => {
                                 <section className="bg-card border border-border p-8 rounded-xl">
                                     <h2 className="font-display text-2xl text-foreground mb-4">Overview</h2>
                                     <p className="text-muted-foreground leading-relaxed">
-                                        CARBONX is the flagship hackathon initiative curated by the Department of Electronics and
-                                        Communication Engineering, currently conducted as a dedicated track under HackS'US,
-                                        an innovation event organized by RSET IEDC and IIC RSET. CARBONX focuses on hardware-centric innovation,
-                                        embedded systems, and electronics-driven problem solving, providing participants with a platform
-                                        to design, prototype, and validate real-world engineering solutions. While hosted under Hacks'us
-                                        for the present edition, CARBONX retains complete technical ownership by the department and is
-                                        envisioned as an annual, independently conducted hackathon in the coming years.
-                                        The initiative continues its collaboration with the Centre for Development of Advanced Computing (CDAC),
-                                        reinforcing its emphasis on indigenous technology and deep-tech development.
+                                        SyncConX challenges engineers to design data-driven electrical and instrumentation systems.
+                                        Leverage sensors, IoT, and intelligent analytics to create systems that monitor, measure, and optimize electrical workflows.
                                     </p>
                                 </section>
 
                                 {/* Requirements */}
                                 <section className="bg-card border border-border p-8 rounded-xl">
-                                    <h2 className="font-display text-2xl text-foreground mb-4">History</h2>
-                                    <p className="space-y-3 text-muted-foreground">
-                                        CARBONX traces its origins back to 2022, when it was first launched as VEGATHON, a national-level
-                                        hardware hackathon conducted by the Department of Electronics and Communication Engineering in
-                                        collaboration with CDAC. VEGATHON 2022 was centered around the VEGA Processor,
-                                        an indigenous processor architecture developed by CDAC, and was designed to promote
-                                        hands-on learning, processor-level understanding, and system-based innovation.
-                                        Building on the success and technical legacy of VEGATHON, the initiative was later
-                                        rebranded as CARBON, with CARBONX introduced as its competitive hackathon format.
-                                        This evolution reflects the department's long-term vision of creating a sustained
-                                        innovation ecosystem rooted in electronics and hardware excellence.
-                                    </p>
+                                    <h2 className="font-display text-2xl text-foreground mb-4">Requirements</h2>
+                                    <ul className="space-y-3 text-muted-foreground">
+                                        <li className="flex gap-3">
+                                            <span className="text-primary">•</span>
+                                            <span>Data acquisition and instrumentation system</span>
+                                        </li>
+                                        <li className="flex gap-3">
+                                            <span className="text-primary">•</span>
+                                            <span>Real-time monitoring or control capabilities</span>
+                                        </li>
+                                        <li className="flex gap-3">
+                                            <span className="text-primary">•</span>
+                                            <span>System design documentation</span>
+                                        </li>
+                                        <li className="flex gap-3">
+                                            <span className="text-primary">•</span>
+                                            <span>Data analysis and insights presentation</span>
+                                        </li>
+                                    </ul>
                                 </section>
 
                                 {/* Judging Criteria */}
@@ -75,19 +75,19 @@ const CarbonX = () => {
                                     <ul className="space-y-3 text-muted-foreground">
                                         <li className="flex gap-3">
                                             <span className="text-primary">•</span>
-                                            <span>Hardware Innovation (25%)</span>
+                                            <span>System Design (25%)</span>
                                         </li>
                                         <li className="flex gap-3">
                                             <span className="text-primary">•</span>
-                                            <span>AI Integration (25%)</span>
+                                            <span>Data Integration (25%)</span>
                                         </li>
                                         <li className="flex gap-3">
                                             <span className="text-primary">•</span>
-                                            <span>Efficiency & Performance (25%)</span>
+                                            <span>Accuracy & Reliability (25%)</span>
                                         </li>
                                         <li className="flex gap-3">
                                             <span className="text-primary">•</span>
-                                            <span>Scalability & Practicality (25%)</span>
+                                            <span>Practical Application (25%)</span>
                                         </li>
                                     </ul>
                                 </section>
@@ -130,4 +130,4 @@ const CarbonX = () => {
     );
 };
 
-export default CarbonX;
+export default SyncConX;

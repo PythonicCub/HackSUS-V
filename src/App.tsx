@@ -6,9 +6,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Dithering } from "@paper-design/shaders-react";
 import Index from "./pages/Index";
-
-const CarbonX = lazy(() => import("./pages/CarbonX"));
-const NotFound = lazy(() => import("./pages/NotFound"));
+import NotFound from "./pages/NotFound";
+import AstraX from "./pages/AstraX";
+import CarbonX from "./pages/CarbonX";
+import SyncConX from "./pages/SyncConX";
+import HeliX from "./pages/HeliX";
+import ScreenX from "./pages/ScreenX";
+import UnmuteX from "./pages/UnmuteX";
 
 const queryClient = new QueryClient();
 
@@ -55,7 +59,12 @@ const AppShell = () => {
         <Suspense fallback={null}>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/astraX" element={<AstraX />} />
             <Route path="/carbonx" element={<CarbonX />} />
+            <Route path="/syncconx" element={<SyncConX />} />
+            <Route path="/helix" element={<HeliX />} />
+            <Route path="/screenx" element={<ScreenX />} />
+            <Route path="/unmutex" element={<UnmuteX />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

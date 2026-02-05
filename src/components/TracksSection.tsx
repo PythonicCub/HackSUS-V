@@ -7,37 +7,42 @@ const tracks = [
     title: "AstraX (Software)",
     description: "Integrate AI into software workflows to make them more efficient",
     color: "from-primary to-accent",
+    path: "/astraX",
   },
   {
     icon: CircuitBoard,
     title: "CarbonX (Electronics)",
     description: "Build AI-enabled electronic systems that rethink and optimize everyday workflows.",
     color: "from-accent to-neon",
-    href: "/carbonx",
+    path: "/carbonx",
   },
   {
     icon: Plug2,
     title: "SyncConX (EEE & Instrumentation)",
     description: "Create data-driven electrical and instrumentation systems for smarter, more efficient workflows.",
     color: "from-primary to-crimson",
+    path: "/syncconx",
   },
   {
     icon: Hammer,
     title: "HeliX (Civil)",
-    description: "Integrate intelligent tools into civil and mechanical engineering to build smarter, more efficient workflows.",
+    description: "Integrate intelligent tools into civil engineering to build smarter, more efficient workflows.",
     color: "from-accent to-primary",
+    path: "/helix",
   },
   {
     icon: Clapperboard,
     title: "ScreenX (Film)",
     description: "Create innovative film solutions that streamline, augment, and elevate production workflows.",
     color: "from-primary to-accent",
+    path: "/screenx",
   },
   {
     icon: Music,
     title: "UnmuteX (Music)",
     description: "Create innovative music solutions that streamline, augment, and elevate production workflows.",
     color: "from-primary to-accent",
+    path: "/unmutex",
   },
 ];
 
@@ -61,13 +66,14 @@ const TracksSection = () => {
 
         {/* Tracks grid */}
         <div className="grid grid-cols-1 [@media(min-width:1016px)]:grid-cols-3 lg:grid-cols-3 gap-6">
-          {tracks.map((track, i) => {
-            const body = (
-              <>
-                {/* Gradient overlay on hover */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${track.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
-                />
+          {tracks.map((track, i) => (
+            <Link
+              key={i}
+              to={track.path}
+              className="group relative bg-card border border-border p-8 hover-glow transition-all duration-500"
+            >
+              {/* Gradient overlay on hover */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${track.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
 
                 {/* Content */}
                 <div className="relative z-10">
@@ -82,21 +88,19 @@ const TracksSection = () => {
                     {track.title}
                   </h3>
 
-                  {/* Description */}
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {track.description}
-                  </p>
+                {/* Description */}
+                <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                  {track.description}
+                </p>
 
-                  {/* Bottom accent line */}
-                  <div className="mt-6 h-0.5 bg-border group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-transparent transition-all duration-500" />
-                </div>
+                {/* Visit page */}
+                <p className="text-primary text-sm font-semibold drop-shadow-[0_0_8px_rgba(var(--color-primary),0.6)] group-hover:drop-shadow-[0_0_16px_rgba(var(--color-primary),0.8)] transition-all duration-500">
+                  Visit Page
+                </p>
 
-                {/* Corner decoration */}
-                <div className="absolute top-4 right-4 font-mono text-xs text-muted-foreground opacity-50">
-                  TRACK_{String(i + 1).padStart(2, "0")}
-                </div>
-              </>
-            );
+                {/* Bottom accent line */}
+                <div className="mt-6 h-0.5 bg-border group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-transparent transition-all duration-500" />
+              </div>
 
             return track.href ? (
               <Link
@@ -114,11 +118,11 @@ const TracksSection = () => {
               >
                 {body}
               </div>
-            );
-          })}
+            </Link>
+          ))}
         </div>
-      </div>
-    </section>
+      </div >
+    </section >
   );
 };
 
