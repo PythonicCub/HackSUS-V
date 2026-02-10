@@ -110,7 +110,7 @@ const Kruisex = () => {
                                     className="flex flex-col items-start md:items-end gap-2 border-l md:border-l-0 md:border-r border-blue-500/40 pl-6 md:pr-6 py-2 bg-black/20 backdrop-blur-md rounded-r-none md:rounded-l-none"
                                 >
                                     <span className="font-mono text-sm text-white/70 uppercase">Event Date</span>
-                                    <span className="font-display text-4xl text-primary tracking-tight uppercase [text-shadow:0_0_20px_rgba(231,24,24,0.4)]">MARCH 19</span>
+                                    <span className="font-display text-4xl text-primary tracking-tight uppercase [text-shadow:0_0_20px_rgba(231,24,24,0.4)]">FEB 19</span>
                                     <span className="font-mono text-xs text-blue-300 font-bold uppercase">Location: Water Metro / Kochi</span>
                                 </motion.div>
                             </div>
