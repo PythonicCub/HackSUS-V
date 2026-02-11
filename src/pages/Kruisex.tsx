@@ -314,7 +314,7 @@ const Kruisex = () => {
                             {[
                                 { q: "What is registration fee?", a: "KRUISE X is 49 INR per person" },
                                 { q: "Who can participate?", a: "Teams of 3-4 students from any college in Kerala." },
-                                { q: "Do we need a working prototype?", a: "No, Just presnet the problems and your ideas to solve them." },
+                                { q: "Do we need a working prototype?", a: "No, Just present the problems and your ideas to solve them." },
                                 { q: "What are the prizes?", a: "Cash prizes, and the chance to showcase to KMRL leadership." }
                             ].map((faq, i) => (
                                 <div key={i} className="space-y-2">
