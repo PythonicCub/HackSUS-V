@@ -25,8 +25,8 @@ const PreEventsTimeline = () => {
         },
         {
             id: 3,
-            date: "Mar 19, 2026",
-            title: "KRUISE X",
+            date: "Feb 19, 2026",
+            title: "KRUIZE X",
             description: "An onboard Ideathon in Kochi Water Metro. Shortlisting teams now!",
             icon: <Ship className="w-5 h-5 text-primary" />,
             align: "left",
@@ -35,7 +35,7 @@ const PreEventsTimeline = () => {
         },
         {
             id: 6,
-            date: "Mar 26, 2026",
+            date: "Mar 6, 2026",
             title: "HackSUS V Begins",
             description: "The 42-hour marathon starts here.",
             icon: <Calendar className="w-5 h-5 text-primary" />,

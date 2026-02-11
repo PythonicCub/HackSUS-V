@@ -73,7 +73,7 @@ const Index = () => {
           <DialogFooter className="flex gap-3">
             <Button
               onClick={() => {
-                window.open("/kruisex", "_blank");
+                window.location.href = "/kruisex";
               }}
               className="flex-1 bg-[#2563eb] hover:bg-[#2563eb] !focus:ring-[#2563eb] !focus:ring-offset-0 !ring-[#2563eb]"
             >

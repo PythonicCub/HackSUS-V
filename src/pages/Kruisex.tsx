@@ -196,7 +196,7 @@ const Kruisex = () => {
                                 </div>
                                 <div className="space-y-6 text-muted-foreground leading-relaxed text-lg">
                                     <p>
-                                        In collaboration with <span className="text-foreground font-semibold">KMRL</span>, KRUISE X tasks participants to identify and solve critical bottlenecks in Kochi's public transport ecosystem.
+                                        In collaboration with <span className="text-foreground font-semibold">Kochi Water Metro</span>, KRUIZE<span className="ml-1">X</span> tasks participants to identify and solve critical bottlenecks in Kochi's public transport ecosystem.
                                     </p>
                                     <p>
                                         The mission is simple yet profound: <span className="text-blue-400 underline decoration-blue-500/30 underline-offset-4 font-medium italic">How can we increase the adoption of public transport like the Metro and Water Metro?</span>
@@ -255,7 +255,7 @@ const Kruisex = () => {
                                         <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center font-mono text-blue-400 mb-4 italic">02</div>
                                         <h3 className="font-display text-xl mb-2">Finale Onboard</h3>
                                         <p className="text-sm text-blue-100/70 leading-relaxed font-medium">
-                                            Finalist teams will present their solutions to KMRL officials while cruising on the Water Metro on March 19.
+                                            Finalist teams will present their solutions to KMRL officials while cruising on the Water Metro from the High Court Station on March 19.
                                         </p>
                                     </motion.div>
                                 </div>
@@ -320,10 +320,11 @@ const Kruisex = () => {
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 max-w-5xl mx-auto">
                             {[
-                                { q: "What is registration fee?", a: "KRUISE X is 49 INR per person" },
+                                { q: "What is registration fee?", a: "KRUIZE X is 49 INR per person" },
                                 { q: "Who can participate?", a: "Teams of 3-4 students from any college in Kerala." },
                                 { q: "Do we need a working prototype?", a: "No, Just present the problems and your ideas to solve them." },
-                                { q: "What are the prizes?", a: "Cash prizes, and the chance to showcase to KMRL leadership." }
+                                { q: "What are the prizes?", a: "Cash prizes, and the chance to showcase to KMRL leadership." },
+                                { q: "Where does the water metro start from?", a: "The offline round will start on the Kochi Water Metro from the High Court Station" }
                             ].map((faq, i) => (
                                 <div key={i} className="space-y-2">
                                     <h4 className="font-mono text-blue-400 text-sm uppercase tracking-wide">// {faq.q}</h4>
