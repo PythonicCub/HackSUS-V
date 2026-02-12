@@ -668,6 +668,17 @@
   opacity: 0.55;
 }
 
+@media (max-width: 767px) {
+  .truefocus-mobile-item.truefocus-dimmed .truefocus-content {
+    opacity: 1;
+    filter: none;
+  }
+
+  .truefocus-mobile-item.truefocus-dimmed .truefocus-veil {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
 
   .truefocus-content,

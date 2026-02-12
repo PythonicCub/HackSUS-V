@@ -202,13 +202,13 @@ function GlassCard({
   className,
   children,
   overlayClassName = "bg-gradient-to-br from-primary/10 via-transparent to-transparent",
-}: {
-  className?: string;
-  children: React.ReactNode;
+  ...props
+}: React.ComponentProps<typeof Card> & {
   overlayClassName?: string;
 }) {
   return (
     <Card
+      {...props}
       className={cn(
         "relative overflow-hidden rounded-none card-beveled border-border/70 bg-card/80 backdrop-blur-sm shadow-[0_14px_50px_rgba(0,0,0,0.38)]",
         className,
@@ -433,6 +433,9 @@ const CarbonX = () => {
   const particleColors = useMemo(() => ["#ffffff"], []);
   const particleTuning = useParticleTuning();
   const [magnetDisabled, setMagnetDisabled] = useState(true);
+  const [isMobileTracks, setIsMobileTracks] = useState(false);
+  const [openTrackDetails, setOpenTrackDetails] = useState<TrackKey | null>(null);
+  const trackDetailsOpenTimerRef = useRef<number | null>(null);
   const partnerLogos = useMemo(
     () => [
       {
@@ -530,6 +533,23 @@ const CarbonX = () => {
     },
     [scrollToSection],
   );
+  const openTrackDetailsFromHome = useCallback(
+    (track: TrackKey) => {
+      scrollToSection("tracks");
+      if (trackDetailsOpenTimerRef.current !== null) {
+        window.clearTimeout(trackDetailsOpenTimerRef.current);
+      }
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      trackDetailsOpenTimerRef.current = window.setTimeout(
+        () => {
+          setOpenTrackDetails(track);
+          trackDetailsOpenTimerRef.current = null;
+        },
+        prefersReducedMotion ? 60 : 520,
+      );
+    },
+    [scrollToSection],
+  );
 
   useEffect(() => {
     // Prevent browser scroll restoration from skipping the hero on reload.
@@ -554,6 +574,24 @@ const CarbonX = () => {
     }
     window.scrollTo({ top: 0, behavior: "auto" });
   }, [location.hash, scrollToSection]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const handleChange = (event: MediaQueryListEvent) => {
+      setIsMobileTracks(event.matches);
+    };
+    setIsMobileTracks(mediaQuery.matches);
+    mediaQuery.addEventListener("change", handleChange);
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
+  }, []);
+
+  useEffect(() => () => {
+    if (trackDetailsOpenTimerRef.current !== null) {
+      window.clearTimeout(trackDetailsOpenTimerRef.current);
+    }
+  }, []);
 
   return (
     <main id="top" className="landing-surface relative text-foreground overflow-x-hidden">
@@ -777,7 +815,7 @@ const CarbonX = () => {
 		                              <Button
 		                                type="button"
 		                                variant={ui.detailsVariant}
-		                                onClick={() => scrollToSection("tracks")}
+		                                onClick={() => openTrackDetailsFromHome(t.registerKey as TrackKey)}
 		                                className={cn(
 		                                  "h-8 rounded-xl px-3 font-display text-[11px] tracking-[0.2em]",
 		                                  ui.detailsClass,
@@ -1031,11 +1069,11 @@ const CarbonX = () => {
 
           <TrueFocus
             className="relative grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8"
-            itemClassName="h-full cursor-pointer"
-            blurAmount={2.2}
-            borderColor="hsl(var(--primary))"
-            glowColor="hsl(var(--primary) / 0.45)"
-            animationDuration={0.38}
+            itemClassName={cn("h-full cursor-pointer", isMobileTracks && "truefocus-mobile-item")}
+            blurAmount={isMobileTracks ? 0 : 2.2}
+            borderColor={isMobileTracks ? "transparent" : "hsl(var(--primary))"}
+            glowColor={isMobileTracks ? "transparent" : "hsl(var(--primary) / 0.45)"}
+            animationDuration={isMobileTracks ? 0 : 0.38}
           >
             {[
               {
@@ -1056,6 +1094,7 @@ const CarbonX = () => {
                   "Smart Cities & Infrastructure",
                   "Fiction in Real Life - Enhanced Gadgets",
                 ],
+                detailsListTitle: "Problem statements",
               },
               {
                 id: "track-electrothon",
@@ -1065,13 +1104,26 @@ const CarbonX = () => {
                 badge: "02",
                 registerKey: "electrothon",
                 ctaLabel: "ELECTROTHON",
-                writeupTitle: undefined,
-                longDescription: undefined,
-                problemStatements: undefined,
+                writeupTitle: "ELECTROTHON 2026",
+                longDescription:
+                  "Step into the world of high-performance digital logic with Electrothon, a premier Electronic Design Automation (EDA) track designed for hardware enthusiasts and VLSI aspirants. Leveraging the power of the Xilinx Vivado Design Suite, participants will navigate the end-to-end hardware development lifecycle, from writing efficient Verilog HDL to generating synthesisable bitstreams. This track is designed to push the boundaries of FPGA-based design by challenging you to solve complex architectural problems while balancing timing, area, and power constraints. Whether you're developing custom RISC processors or advanced signal processing units, Electrothon provides the platform to showcase your technical depth and innovation in the VLSI domain. The problem statement will be announced at the beginning of the event.",
+                problemStatements: [
+                  "Xilinx Vivado Design Suite workflows (synthesis → implementation → bitstream).",
+                  "Efficient Verilog HDL and synthesizable RTL design.",
+                  "Timing, area, and power-aware architectural tradeoffs.",
+                  "Advanced FPGA builds: custom RISC processors, DSP units, and more.",
+                  "Problem statement announced at event kickoff.",
+                ],
+                detailsListTitle: "Track highlights",
               },
 	            ].map((t) => {
-	              const ui = trackLaneUi[t.registerKey as TrackKey];
+	              const registerKey = t.registerKey as TrackKey;
+	              const ui = trackLaneUi[registerKey];
 	              const TrackIcon = ui.icon;
+                const detailsListTitle = (t.detailsListTitle ?? "Problem statements").trim();
+                const detailsListLabel = detailsListTitle.toLowerCase();
+                const hasDetails = Boolean(t.writeupTitle && t.longDescription && t.problemStatements);
+                const isDetailsOpen = openTrackDetails === registerKey;
 
 	              return (
 	                <motion.div
@@ -1083,8 +1135,28 @@ const CarbonX = () => {
 	                  transition={{ duration: 0.55, ease: "easeOut" }}
 	                  className="h-full"
 	                >
-	                  <GlassCard
-	                    className="p-7 md:p-8 h-full"
+                    <Dialog
+                      open={isDetailsOpen}
+                      onOpenChange={(next) =>
+                        setOpenTrackDetails(next ? registerKey : null)
+                      }
+                    >
+	                    <GlassCard
+                        role={hasDetails ? "button" : undefined}
+                        tabIndex={hasDetails ? 0 : -1}
+                        aria-haspopup={hasDetails ? "dialog" : undefined}
+                        onClick={() => {
+                          if (!hasDetails) return;
+                          setOpenTrackDetails(registerKey);
+                        }}
+                        onKeyDown={(e) => {
+                          if (!hasDetails) return;
+                          if (e.target !== e.currentTarget) return;
+                          if (e.key !== "Enter" && e.key !== " ") return;
+                          e.preventDefault();
+                          setOpenTrackDetails(registerKey);
+                        }}
+	                    className="p-6 sm:p-7 md:p-8 h-full"
 	                    overlayClassName="bg-[radial-gradient(140%_120%_at_24%_18%,rgba(255,255,255,0.035)_0%,transparent_58%),linear-gradient(to_bottom,rgba(0,0,0,0.02),rgba(0,0,0,0.18))]"
 	                  >
 	                    <div
@@ -1095,9 +1167,9 @@ const CarbonX = () => {
 	                      aria-hidden="true"
 	                    />
 		                    <div className="truefocus-content flex h-full flex-col">
-		                      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-		                        <div className="min-w-0">
-		                          <div className="font-display text-xl md:text-2xl tracking-wide">
+		                      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+		                        <div className="order-2 min-w-0 sm:order-none">
+		                          <div className="font-display text-lg sm:text-xl md:text-2xl tracking-wide">
 		                            {t.title}
 		                          </div>
 	                          <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
@@ -1109,44 +1181,23 @@ const CarbonX = () => {
                                     variant="outline"
                                     className="border-primary/30 bg-primary/5 text-primary/90 font-mono text-[10px] tracking-[0.24em] uppercase"
                                   >
-                                    {t.problemStatements.length} problem statements
+                                    {t.problemStatements.length} {detailsListLabel}
                                   </Badge>
-                                  <Dialog>
                                     <DialogTrigger asChild>
                                       <button
                                         type="button"
                                         className="inline-flex items-center rounded-full border border-border/70 bg-background/30 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.24em] text-foreground/90 transition hover:border-primary/45 hover:bg-primary/10 hover:text-foreground"
+                                        onClick={(e) => e.stopPropagation()}
                                       >
                                         View details
                                         <ArrowRight className="ml-1.5 h-3 w-3" />
                                       </button>
                                     </DialogTrigger>
-                                    <DialogContent className="border-border/70 bg-[#07090d]/95 text-foreground backdrop-blur-md sm:max-w-[680px]">
-                                      <DialogHeader>
-                                        <DialogTitle className="font-display text-2xl tracking-wide">
-                                          {t.writeupTitle}
-                                        </DialogTitle>
-                                        <DialogDescription className="text-muted-foreground text-sm leading-relaxed">
-                                          {t.longDescription}
-                                        </DialogDescription>
-                                      </DialogHeader>
-                                      <div className="mt-1">
-                                        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary/90">
-                                          Problem statements
-                                        </p>
-                                        <ol className="mt-3 list-decimal space-y-1.5 pl-4 text-sm text-foreground/90 leading-relaxed">
-                                          {t.problemStatements.map((statement) => (
-                                            <li key={statement}>{statement}</li>
-                                          ))}
-                                        </ol>
-                                      </div>
-                                    </DialogContent>
-                                  </Dialog>
                                 </div>
                               ) : null}
 	                        </div>
 
-	                        <div className="flex shrink-0 flex-wrap items-center gap-2 sm:flex-col sm:items-end">
+	                        <div className="order-1 flex w-full shrink-0 flex-wrap items-center justify-between gap-2 sm:order-none sm:w-auto sm:flex-col sm:items-end sm:justify-start">
 	                          <span className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.34em] text-primary shadow-[0_0_0_1px_rgba(255,49,46,0.06),0_14px_40px_rgba(255,49,46,0.08)]">
 	                            TRACK <span className="text-foreground/90">{t.badge}</span>
 	                          </span>
@@ -1173,12 +1224,13 @@ const CarbonX = () => {
 		                          </p>
 		                          <Button
 		                            type="button"
-		                            onClick={() =>
+		                            onClick={(e) => {
+                                  e.stopPropagation();
 		                              openRegistration(
 		                                t.registerKey as keyof typeof carbonX.registerUrls,
-		                              )
-		                            }
-		                            className="h-11 rounded-xl px-7 font-display tracking-widest shadow-[0_14px_42px_hsl(var(--primary)/0.18)]"
+		                              );
+		                            }}
+		                            className="h-11 w-full rounded-xl px-7 font-display tracking-widest shadow-[0_14px_42px_hsl(var(--primary)/0.18)] sm:w-auto"
 		                          >
 		                            REGISTER {t.ctaLabel}
 		                            <ArrowRight className="ml-2 h-4 w-4" />
@@ -1191,6 +1243,32 @@ const CarbonX = () => {
 	                      aria-hidden="true"
 	                    />
 	                  </GlassCard>
+                    {t.writeupTitle && t.longDescription && t.problemStatements ? (
+                      <DialogContent
+                        className="border-border/70 bg-[#07090d]/95 text-foreground backdrop-blur-md sm:max-w-[680px]"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <DialogHeader>
+                          <DialogTitle className="font-display text-2xl tracking-wide">
+                            {t.writeupTitle}
+                          </DialogTitle>
+                          <DialogDescription className="text-muted-foreground text-sm leading-relaxed">
+                            {t.longDescription}
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="mt-1">
+                          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary/90">
+                            {detailsListTitle}
+                          </p>
+                          <ol className="mt-3 list-decimal space-y-1.5 pl-4 text-sm text-foreground/90 leading-relaxed">
+                            {t.problemStatements.map((statement) => (
+                              <li key={statement}>{statement}</li>
+                            ))}
+                          </ol>
+                        </div>
+                      </DialogContent>
+                    ) : null}
+                  </Dialog>
 	                </motion.div>
 	              );
 	            })}
@@ -1308,16 +1386,106 @@ const CarbonX = () => {
         </section>
 
         {/* Footer */}
-        <footer className="relative py-14 md:py-20">
-          <div className="container max-w-[1100px] px-6">
-          <div className="rounded-none card-beveled border border-border/70 bg-card/60 p-7 md:p-10 text-center">
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {carbonX.organizer}
-            </p>
-            <div className="mt-6 font-mono text-xs tracking-[0.34em] text-muted-foreground">
-              © <span className="font-mokoto">{carbonX.eventName}</span> {carbonX.year}
-            </div>
+        <footer className="relative isolate overflow-hidden py-14 md:py-20">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+          <div className="pointer-events-none absolute inset-0 -z-10">
+            <div className="absolute inset-0 bg-[radial-gradient(760px_420px_at_50%_115%,hsl(var(--primary)/0.18),transparent_62%)]" />
+            <div className="absolute inset-0 opacity-[0.12] [background-image:linear-gradient(to_right,hsl(var(--border)/0.35)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.28)_1px,transparent_1px)] [background-size:44px_44px]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/40" />
           </div>
+
+          <div className="container max-w-[1100px] px-6">
+            <div className="rounded-none card-beveled border border-border/70 bg-card/55 backdrop-blur-sm p-7 md:p-10 shadow-[0_18px_60px_rgba(0,0,0,0.42)]">
+              <div className="grid gap-8 md:grid-cols-12 md:items-start">
+                <div className="md:col-span-7">
+                  <div className="flex items-center gap-3">
+                    <span className="font-mokoto tracking-[0.32em] text-[15px] text-foreground/90">
+                      {carbonX.eventName}
+                    </span>
+                    <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-muted-foreground">
+                      {carbonX.year}
+                    </span>
+                    <div className="h-px flex-1 bg-border/60" />
+                  </div>
+
+                  <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
+                    {carbonX.organizer}
+                  </p>
+
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    <span className="inline-flex items-center rounded-full border border-primary/25 bg-primary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.34em] text-primary">
+                      {carbonX.date}
+                    </span>
+                    <span className="inline-flex items-center rounded-full border border-border/70 bg-background/30 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.34em] text-foreground/90">
+                      {carbonX.city}
+                    </span>
+                    <span className="inline-flex items-center rounded-full border border-border/70 bg-background/20 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.34em] text-muted-foreground">
+                      {carbonX.tagline}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="md:col-span-5">
+                  <div className="font-mono text-[10px] uppercase tracking-[0.34em] text-muted-foreground">
+                    Quick links
+                  </div>
+
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {[
+                      { id: "about", label: "ABOUT" },
+                      { id: "history", label: "HISTORY" },
+                      { id: "tracks", label: "TRACKS" },
+                      { id: "contacts", label: "CONTACTS" },
+                      { id: "top", label: "CARBONX", fullWidth: true },
+                    ].map((it) => (
+                      <button
+                        key={it.id}
+                        type="button"
+                        onClick={() => scrollToSection(it.id)}
+                        className={cn(
+                          "inline-flex items-center rounded-full border border-border/70 bg-background/20 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.34em] text-foreground/90 transition hover:border-primary/45 hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                          it.fullWidth ? "w-full justify-center" : "",
+                        )}
+                      >
+                        {it.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center">
+                    <Button
+                      type="button"
+                      onClick={() => openRegistration("vegathon")}
+                      variant="outline"
+                      className="h-10 rounded-xl border-primary/30 bg-background/5 px-5 font-display text-[11px] tracking-[0.2em] text-primary hover:bg-primary/10 hover:text-primary hover:border-primary/45"
+                      aria-label="Register for Vegathon on KonfHub"
+                    >
+                      REGISTER VEGATHON <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => openRegistration("electrothon")}
+                      className="h-10 rounded-xl border-primary/30 bg-background/5 px-5 font-display text-[11px] tracking-[0.2em] text-primary hover:bg-primary/10 hover:text-primary hover:border-primary/45"
+                      aria-label="Register for Electrothon on KonfHub"
+                    >
+                      REGISTER ELECTROTHON <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8 h-px w-full bg-border/70" />
+
+              <div className="mt-5 flex flex-col gap-3 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+                <div className="font-mono text-xs tracking-[0.34em] text-muted-foreground">
+                  © <span className="font-mokoto">{carbonX.eventName}</span> {carbonX.year}
+                </div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.34em] text-muted-foreground">
+                  Innovation beyond boundaries
+                </div>
+              </div>
+            </div>
           </div>
         </footer>
       </div>
