@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUp, Instagram, Linkedin, Globe, Zap, Brain, Cpu, Sparkles, Code, Database, Network, Menu } from "lucide-react";
+import { ArrowUp, Instagram, Linkedin, Facebook, Twitter, Zap, Brain, Cpu, Sparkles, Code, Database, Network, Menu } from "lucide-react";
 
 import LogoLoop from "@/components/LogoLoop";
 import ResponsiveParticles from "@/components/ResponsiveParticles";
@@ -537,8 +537,7 @@ const AstraX = () => {
     () => [
       { node: <img src="/images/rset_iedc.PNG" alt="IEDC" className="h-16 w-auto object-contain opacity-90" />, ariaLabel: "IEDC" },
       { node: <img src="/images/rset_iic.PNG" alt="IIC" className="h-16 w-auto object-contain opacity-90" />, ariaLabel: "IIC" },
-      { node: <img src="/images/cdac.svg" alt="CDAC" className="h-16 w-auto object-contain opacity-90" />, ariaLabel: "CDAC" },
-      { node: <img src="/images/enauts.svg" alt="ENAUTS" className="h-20 w-auto object-contain opacity-90" />, ariaLabel: "ENAUTS" },
+      { node: <img src="/images/articon_logo.png" alt="CDAC" className="h-16 w-auto object-contain opacity-90" />, ariaLabel: "Articon" },
       { node: <img src="/images/rset_jubilee.png" alt="RSET Jubilee" className="h-16 w-auto object-contain opacity-90" />, ariaLabel: "RSET Jubilee" },
     ],
     []
@@ -651,7 +650,7 @@ const AstraX = () => {
         activeId={activeId}
         items={[
           { id: "about", label: "ABOUT" },
-          { id: "prizes", label: "PRIZES" },
+          /*{ id: "prizes", label: "PRIZES" },*/
           { id: "contacts", label: "CONTACTS" },
         ]}
         onNavigate={scrollToSection}
@@ -670,29 +669,29 @@ const AstraX = () => {
             Department of Artificial Intelligence & Data Science, RSET
           </motion.p>
 
-          {/* Organizers with glow effect */}
+          {/* Organizers - BIGGER, CYAN COLOR, MORE VISIBLE */}
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-            className="flex items-center justify-center gap-4 mb-20 relative"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+          className="flex items-center justify-center gap-5 mb-20 relative"
           >
-            <motion.div
-              className="absolute inset-0 blur-2xl opacity-40"
+          <motion.div
+              className="absolute inset-0 blur-3xl opacity-50"
               animate={{
-                background: [
-                  "radial-gradient(circle at 30%, rgba(255,49,46,0.2) 0%, transparent 50%)",
-                  "radial-gradient(circle at 70%, rgba(59,130,246,0.2) 0%, transparent 50%)",
-                  "radial-gradient(circle at 30%, rgba(255,49,46,0.2) 0%, transparent 50%)",
-                ],
+              background: [
+                  "radial-gradient(circle at 30%, rgba(34,211,238,0.3) 0%, transparent 50%)",
+                  "radial-gradient(circle at 70%, rgba(59,130,246,0.3) 0%, transparent 50%)",
+                  "radial-gradient(circle at 30%, rgba(34,211,238,0.3) 0%, transparent 50%)",
+              ],
               }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <span className="relative font-display text-base tracking-[0.25em] text-primary/90">ARTICON</span>
-            <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-primary to-blue-500" />
-            <span className="relative font-display text-base tracking-[0.25em] text-primary/90">IEDC</span>
-            <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-blue-500 to-orange-500" />
-            <span className="relative font-display text-base tracking-[0.25em] text-primary/90">IIC</span>
+          />
+          <span className="relative font-display text-2xl md:text-3xl tracking-[0.25em] text-cyan-400 font-bold drop-shadow-[0_0_20px_rgba(34,211,238,0.6)]">ARTICON</span>
+          <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 shadow-[0_0_15px_rgba(34,211,238,0.8)]" />
+          <span className="relative font-display text-2xl md:text-3xl tracking-[0.25em] text-cyan-400 font-bold drop-shadow-[0_0_20px_rgba(34,211,238,0.6)]">IEDC</span>
+          <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-blue-500 to-emerald-400 shadow-[0_0_15px_rgba(59,130,246,0.8)]" />
+          <span className="relative font-display text-2xl md:text-3xl tracking-[0.25em] text-cyan-400 font-bold drop-shadow-[0_0_20px_rgba(34,211,238,0.6)]">IIC</span>
           </motion.div>
 
           {/* Logo Animation - Bouncy slide-in with RED theme */}
@@ -727,7 +726,7 @@ const AstraX = () => {
                       mass: 0.7,
                       delay: index * 0.12,
                     }}
-                    className="font-display text-8xl md:text-9xl font-bold text-primary drop-shadow-[0_0_40px_rgba(255,49,46,0.6)]"
+                    className="font-mokoto text-8xl md:text-9xl font-bold text-primary drop-shadow-[0_0_40px_rgba(255,49,46,0.6)]"
                   >
                     {letter}
                   </motion.div>
@@ -742,7 +741,7 @@ const AstraX = () => {
               >
                 {/* Main ASTRAX in RED */}
                 <motion.h1
-                  className="font-display text-8xl md:text-9xl font-bold text-primary"
+                  className="font-mokoto text-8xl md:text-9xl text-primary"
                   style={{
                     filter: "drop-shadow(0 0 60px rgba(255,49,46,0.5))",
                   }}
@@ -964,8 +963,8 @@ const AstraX = () => {
         </div>
       </section>
 
-      {/* ==================== PRIZES ==================== */}
-      <section id="prizes" className="relative py-28 md:py-36 scroll-mt-24">
+      {/* ==================== PRIZES ==================== */} 
+      {/*<section id="prizes" className="relative py-28 md:py-36 scroll-mt-24">
         <div className="container max-w-[1200px] px-6 mx-auto">
           <SectionHeading
             eyebrow="PRIZES"
@@ -1036,20 +1035,14 @@ const AstraX = () => {
                 </div>
               </HolographicCard>
             ))}
-          </div>
+          </div> */}
 
           {/* What participants get */}
-          <HolographicCard delay={0.3} colorTheme="mixed">
+          {/*<HolographicCard delay={0.3} colorTheme="mixed">
             <h3 className="font-display text-3xl mb-10 text-center text-foreground">What You'll Receive</h3>
             
-            <div className="grid md:grid-cols-3 gap-10 text-center">
+            <div className="grid md:grid-cols-2 gap-10 text-center">
               {[
-                { 
-                  icon: Sparkles, 
-                  text: "Goodies & Swag", 
-                  desc: "Exclusive AstraX merchandise",
-                  gradient: "from-pink-500 to-rose-500"
-                },
                 { 
                   icon: Database, 
                   text: "Participation Certificate", 
@@ -1096,7 +1089,7 @@ const AstraX = () => {
             </div>
           </HolographicCard>
         </div>
-      </section>
+      </section> */}
 
       {/* ==================== CONTACTS ==================== */}
       <section id="contacts" className="relative py-28 md:py-36 scroll-mt-24">
@@ -1214,32 +1207,56 @@ const AstraX = () => {
         </div>
       </section>
 
-      {/* ==================== SOCIAL FLOAT ==================== */}
+      {/* ==================== SOCIAL FLOAT - 4 WORKING LINKS ==================== */}
       <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 2 }}
-        className="fixed bottom-8 right-8 flex flex-col gap-4 z-50"
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 2 }}
+      className="fixed bottom-8 right-8 flex flex-col gap-4 z-50"
       >
-        {[
-          { icon: Instagram, href: "#", gradient: "from-pink-500 to-rose-500" },
-          { icon: Linkedin, href: "#", gradient: "from-blue-600 to-blue-500" },
-          { icon: Globe, href: "#", gradient: "from-green-500 to-emerald-500" },
-        ].map((social, index) => (
+      {[
+          { 
+          icon: Instagram, 
+          href: "https://www.instagram.com/rsetiedc/", 
+          gradient: "from-pink-500 to-rose-500",
+          label: "Instagram"
+          },
+          { 
+          icon: Linkedin, 
+          href: "https://www.linkedin.com/company/rset-iedc/?originalSubdomain=in", 
+          gradient: "from-blue-600 to-blue-500",
+          label: "LinkedIn"
+          },
+          { 
+          icon: Facebook, 
+          href: "https://www.facebook.com/iedc.rset/", 
+          gradient: "from-blue-500 to-blue-600",
+          label: "Facebook"
+          },
+          { 
+          icon: Twitter, 
+          href: "https://x.com/rset_iedc", 
+          gradient: "from-gray-700 to-black",
+          label: "Twitter/X"
+          },
+      ].map((social, index) => (
           <motion.a
-            key={index}
-            href={social.href}
-            whileHover={{ scale: 1.15, rotate: 5 }}
-            whileTap={{ scale: 0.9 }}
-            className={cn(
+          key={index}
+          href={social.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.15, rotate: 5 }}
+          whileTap={{ scale: 0.9 }}
+          className={cn(
               "p-4 rounded-2xl backdrop-blur-xl border border-white/10 shadow-2xl",
               "bg-gradient-to-br",
               social.gradient
-            )}
+          )}
+          aria-label={social.label}
           >
-            <social.icon className="w-6 h-6 text-white" />
+          <social.icon className="w-6 h-6 text-white" />
           </motion.a>
-        ))}
+      ))}
       </motion.div>
 
       {/* ==================== FOOTER ==================== */}
