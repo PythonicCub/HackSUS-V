@@ -621,6 +621,7 @@ const CarbonX = () => {
           deviceOrientationFactor={2.4}
           particleHoverFactor={particleTuning.particleHoverFactor}
           hoverMode="window"
+          pauseOnScroll={true}
           alphaParticles={false}
           disableRotation={false}
           pixelRatio={particleTuning.pixelRatio}
