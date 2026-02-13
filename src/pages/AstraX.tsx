@@ -13,7 +13,7 @@ import { useParticleTuning } from "@/hooks/useParticlesQuality";
 import GraphNetwork from "@/components/GraphNetwork";
 
 
-// ==================== NEURAL NETWORK BACKGROUND ====================
+// ==================== NEURAL NETWORK BACKGROUND (OPTIMIZED) ====================
 function NeuralNetwork() {
   const canvasRef = useRef(null);
   const nodesRef = useRef([]);
@@ -31,8 +31,8 @@ function NeuralNetwork() {
     };
     setCanvasSize();
 
-    // Create nodes
-    const nodeCount = 50;
+    // Reduced node count for performance
+    const nodeCount = 30; // Reduced from 50
     nodesRef.current = Array.from({ length: nodeCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
@@ -172,7 +172,7 @@ function useActiveSection(sectionIds) {
   return active;
 }
 
-// ==================== HOLOGRAPHIC CARD ====================
+// ==================== HOLOGRAPHIC CARD (OPTIMIZED) ====================
 function HolographicCard({ className, children, delay = 0, colorTheme = "red" }) {
   const cardRef = useRef(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -197,7 +197,7 @@ function HolographicCard({ className, children, delay = 0, colorTheme = "red" })
       ref={cardRef}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-200px" }}
+      viewport={{ once: true, margin: "-100px", amount: 0.3 }}
       transition={{ duration: 0.6, delay, ease: [0.25, 0.1, 0.25, 1] }}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
@@ -219,26 +219,8 @@ function HolographicCard({ className, children, delay = 0, colorTheme = "red" })
         }}
       />
 
-      {/* Liquid gradient border effect */}
-      {isHovered && (
-        <motion.div
-          className="absolute inset-0 rounded-2xl"
-          style={{
-            background: `conic-gradient(from ${mousePos.x * 360}deg at ${mousePos.x * 100}% ${mousePos.y * 100}%, transparent, rgba(255,49,46,0.3), transparent)`,
-          }}
-          animate={{
-            rotate: [0, 360],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-      )}
-
-      {/* Content */}
-      <div className="relative backdrop-blur-xl rounded-2xl p-1">
+      {/* Content - reduced blur for performance */}
+      <div className="relative backdrop-blur-md rounded-2xl p-1">
         <div className="relative z-10 p-8">
           {children}
         </div>
@@ -253,32 +235,15 @@ function SectionHeading({ eyebrow, title, description }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-200px" }}
+      viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
       className="mb-16 md:mb-20 text-center relative"
     >
-      {/* Decorative particles */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0 }}
-        whileInView={{ opacity: [0, 1, 0], scale: [0.8, 1.5, 2] }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.2, delay: 0.3 }}
-        className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-8 w-32 h-32 bg-gradient-radial from-primary/20 via-blue-500/10 to-transparent rounded-full blur-xl"
-      />
+      {/* Decorative particles - simplified */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-8 w-32 h-32 bg-gradient-radial from-primary/20 via-blue-500/10 to-transparent rounded-full blur-xl opacity-60" />
 
       <span className="inline-block font-mono text-sm text-primary tracking-[0.4em] uppercase mb-6 relative">
         <span className="relative z-10">// {eyebrow}</span>
-        <motion.span
-          className="absolute inset-0 bg-primary/20 blur-lg"
-          animate={{
-            opacity: [0.5, 0.8, 0.5],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
       </span>
 
       <h2 className="font-display text-5xl md:text-7xl text-foreground tracking-wide mb-6 leading-tight">
@@ -343,7 +308,7 @@ function AstraXNavbar({ activeId, items, onNavigate }) {
   );
 
   return (
-    <header className="astrax-header fixed top-0 left-0 right-0 z-50 bg-black/70 backdrop-blur-2xl border-b border-white/5">
+    <header className="astrax-header fixed top-0 left-0 right-0 z-50 bg-black/70 backdrop-blur-xl border-b border-white/5">
       <div className="container max-w-[1200px] mx-auto px-6 h-20 flex items-center justify-between">
         <div className="flex items-center gap-4">
           {/* Hacks'us Logo */}
@@ -375,17 +340,7 @@ function AstraXNavbar({ activeId, items, onNavigate }) {
             className="flex items-center gap-3 text-foreground/90 hover:text-foreground transition-colors"
           >
             <div className="relative w-12 h-12">
-              <motion.div
-                className="absolute inset-0 rounded-full bg-gradient-to-br from-primary via-red-500 to-orange-500"
-                animate={{
-                  rotate: [0, 360],
-                }}
-                transition={{
-                  duration: 20,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              />
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary via-red-500 to-orange-500" />
               <div className="absolute inset-0.5 rounded-full bg-black flex items-center justify-center">
                 <Sparkles className="w-6 h-6 text-primary" />
               </div>
@@ -458,7 +413,7 @@ function AstraXNavbar({ activeId, items, onNavigate }) {
             </SheetTrigger>
             <SheetContent
               side="right"
-              className="bg-black/95 border-white/10 backdrop-blur-2xl px-6"
+              className="bg-black/95 border-white/10 backdrop-blur-xl px-6"
             >
               <div className="mt-10 flex flex-col gap-8">
                 <div className="font-display tracking-[0.3em] text-lg text-foreground/90">
@@ -482,18 +437,11 @@ function AstraXNavbar({ activeId, items, onNavigate }) {
                       <span className="font-mono text-sm tracking-[0.35em] uppercase font-medium">
                         {it.label}
                       </span>
-                      <motion.span
+                      <span
                         className={cn(
                           "h-2 w-2 rounded-full",
                           activeId === it.id ? "bg-primary" : "bg-primary/50"
                         )}
-                        animate={{
-                          scale: activeId === it.id ? [1, 1.3, 1] : 1,
-                        }}
-                        transition={{
-                          duration: 1,
-                          repeat: activeId === it.id ? Infinity : 0,
-                        }}
                       />
                     </motion.button>
                   ))}
@@ -519,7 +467,7 @@ function AstraXNavbar({ activeId, items, onNavigate }) {
 
 // ==================== MAIN COMPONENT ====================
 const AstraX = () => {
-  const sectionIds = useMemo(() => ["about", "prizes", "contacts"], []);
+  const sectionIds = useMemo(() => ["about", "contacts"], []);
   const activeId = useActiveSection(sectionIds);
 
   // Logo animation state - bouncy slide-in effect
@@ -532,12 +480,12 @@ const AstraX = () => {
   const particleColors = useMemo(() => ["#ffffff"], []);
   const particleTuning = useParticleTuning();
 
-  // Partner logos
+  // Partner logos - WEBP FORMAT
   const partnerLogos = useMemo(
     () => [
       { node: <img src="/images/rset_iedc.PNG" alt="IEDC" className="h-16 w-auto object-contain opacity-90" />, ariaLabel: "IEDC" },
       { node: <img src="/images/rset_iic.PNG" alt="IIC" className="h-16 w-auto object-contain opacity-90" />, ariaLabel: "IIC" },
-      { node: <img src="/images/articon_logo.png" alt="CDAC" className="h-16 w-auto object-contain opacity-90" />, ariaLabel: "Articon" },
+      { node: <img src="/images/articon_logo.png" alt="Articon" className="h-16 w-auto object-contain opacity-90" />, ariaLabel: "Articon" },
       { node: <img src="/images/rset_jubilee.png" alt="RSET Jubilee" className="h-16 w-auto object-contain opacity-90" />, ariaLabel: "RSET Jubilee" },
     ],
     []
@@ -548,7 +496,7 @@ const AstraX = () => {
     if (logoStep < letters.length) {
       const timer = setTimeout(() => {
         setLogoStep((prev) => prev + 1);
-      }, 150); // Smooth timing
+      }, 150);
       return () => clearTimeout(timer);
     } else if (logoStep === letters.length) {
       const timer = setTimeout(() => {
@@ -556,7 +504,6 @@ const AstraX = () => {
       }, 200);
       return () => clearTimeout(timer);
     } else if (showYear) {
-      // Wait 10 seconds then restart
       const timer = setTimeout(() => {
         setLogoStep(0);
         setShowYear(false);
@@ -598,51 +545,31 @@ const AstraX = () => {
 
   return (
     <div id="top" className="relative min-h-screen bg-black text-foreground overflow-x-hidden">
-      {/* ==================== LAYERED BACKGROUND WITH NEURAL NETWORK ==================== */}
+      {/* ==================== LAYERED BACKGROUND (OPTIMIZED) ==================== */}
       <div className="fixed inset-0 -z-0 overflow-hidden">
         {/* Deep gradient base */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-900 via-black to-black" />
 
-        {/* Subtle gradient orbs */}
-        <motion.div
-          className="absolute top-0 -left-1/4 w-[600px] h-[600px] rounded-full blur-[120px] opacity-10"
+        {/* Subtle gradient orbs - STATIC for performance */}
+        <div 
+          className="absolute top-0 -left-1/4 w-[600px] h-[600px] rounded-full blur-[120px] opacity-8"
           style={{
             background: "radial-gradient(circle, rgba(255,49,46,0.3) 0%, transparent 70%)",
           }}
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.08, 0.15, 0.08],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
         />
 
-        <motion.div
+        <div 
           className="absolute bottom-0 -right-1/4 w-[500px] h-[500px] rounded-full blur-[100px] opacity-10"
           style={{
             background: "radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%)",
           }}
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.1, 0.18, 0.1],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
         />
-<GraphNetwork 
-  gridSpacing={50}     // Density of the grid
-  mouseRadius={300}    // How far away the cursor affects the lines
-  strength={0.8}       // How much the lines "bend"
-/>
 
-
-
+        <GraphNetwork 
+          gridSpacing={50}
+          mouseRadius={300}
+          strength={0.8}
+        />
       </div>
 
       {/* ==================== NAVBAR ==================== */}
@@ -650,14 +577,13 @@ const AstraX = () => {
         activeId={activeId}
         items={[
           { id: "about", label: "ABOUT" },
-          /*{ id: "prizes", label: "PRIZES" },*/
           { id: "contacts", label: "CONTACTS" },
         ]}
         onNavigate={scrollToSection}
       />
 
       {/* ==================== HERO ==================== */}
-      <section className="relative pt-40 pb-24 text-center">
+      <section className="relative pt-32 pb-16 text-center">
         <div className="container max-w-[1200px] px-6 mx-auto">
           {/* Department label */}
           <motion.p
@@ -671,38 +597,24 @@ const AstraX = () => {
 
           {/* Organizers - BIGGER, CYAN COLOR, MORE VISIBLE */}
           <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-          className="flex items-center justify-center gap-5 mb-20 relative"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+            className="flex items-center justify-center gap-5 mb-20 relative"
           >
-          <motion.div
-              className="absolute inset-0 blur-3xl opacity-50"
-              animate={{
-              background: [
-                  "radial-gradient(circle at 30%, rgba(34,211,238,0.3) 0%, transparent 50%)",
-                  "radial-gradient(circle at 70%, rgba(59,130,246,0.3) 0%, transparent 50%)",
-                  "radial-gradient(circle at 30%, rgba(34,211,238,0.3) 0%, transparent 50%)",
-              ],
-              }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <span className="relative font-display text-2xl md:text-3xl tracking-[0.25em] text-cyan-400 font-bold drop-shadow-[0_0_20px_rgba(34,211,238,0.6)]">ARTICON</span>
-          <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 shadow-[0_0_15px_rgba(34,211,238,0.8)]" />
-          <span className="relative font-display text-2xl md:text-3xl tracking-[0.25em] text-cyan-400 font-bold drop-shadow-[0_0_20px_rgba(34,211,238,0.6)]">IEDC</span>
-          <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-blue-500 to-emerald-400 shadow-[0_0_15px_rgba(59,130,246,0.8)]" />
-          <span className="relative font-display text-2xl md:text-3xl tracking-[0.25em] text-cyan-400 font-bold drop-shadow-[0_0_20px_rgba(34,211,238,0.6)]">IIC</span>
+            <div className="absolute inset-0 blur-3xl opacity-50 bg-[radial-gradient(circle,rgba(34,211,238,0.3)_0%,transparent_50%)]" />
+            <span className="relative font-display text-2xl md:text-3xl tracking-[0.25em] text-cyan-400 font-bold drop-shadow-[0_0_20px_rgba(34,211,238,0.6)]">ARTICON</span>
+            <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 shadow-[0_0_15px_rgba(34,211,238,0.8)]" />
+            <span className="relative font-display text-2xl md:text-3xl tracking-[0.25em] text-cyan-400 font-bold drop-shadow-[0_0_20px_rgba(34,211,238,0.6)]">IEDC</span>
+            <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-blue-500 to-emerald-400 shadow-[0_0_15px_rgba(59,130,246,0.8)]" />
+            <span className="relative font-display text-2xl md:text-3xl tracking-[0.25em] text-cyan-400 font-bold drop-shadow-[0_0_20px_rgba(34,211,238,0.6)]">IIC</span>
           </motion.div>
 
           {/* Logo Animation - Bouncy slide-in with RED theme */}
           <div className="h-[240px] flex items-center justify-center relative mb-16" key={animationKey}>
-            {/* Glowing background */}
-            <motion.div
-              className="absolute inset-0 blur-[80px] -z-10"
-              animate={{
-                opacity: [0.3, 0.5, 0.3],
-              }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            {/* Glowing background - static for performance */}
+            <div
+              className="absolute inset-0 blur-[80px] -z-10 opacity-40"
               style={{
                 background: "radial-gradient(circle, rgba(255,49,46,0.4) 0%, transparent 70%)",
               }}
@@ -726,7 +638,7 @@ const AstraX = () => {
                       mass: 0.7,
                       delay: index * 0.12,
                     }}
-                    className="font-mokoto text-8xl md:text-9xl font-bold text-primary drop-shadow-[0_0_40px_rgba(255,49,46,0.6)]"
+                    className="font-mokoto text-6xl md:text-9xl font-bold text-primary drop-shadow-[0_0_40px_rgba(255,49,46,0.6)]"
                   >
                     {letter}
                   </motion.div>
@@ -739,29 +651,15 @@ const AstraX = () => {
                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
                 className="flex items-baseline gap-5"
               >
-                {/* Main ASTRAX in RED */}
                 <motion.h1
-                  className="font-mokoto text-8xl md:text-9xl text-primary"
+                  className="font-mokoto text-6xl md:text-9xl text-primary"
                   style={{
                     filter: "drop-shadow(0 0 60px rgba(255,49,46,0.5))",
-                  }}
-                  animate={{
-                    textShadow: [
-                      "0 0 20px rgba(255,49,46,0.5)",
-                      "0 0 40px rgba(255,49,46,0.7)",
-                      "0 0 20px rgba(255,49,46,0.5)",
-                    ],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
                   }}
                 >
                   ASTRAX
                 </motion.h1>
 
-                {/* Year appears after */}
                 {showYear && (
                   <motion.span
                     initial={{ opacity: 0, x: -30 }}
@@ -781,16 +679,19 @@ const AstraX = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
-            className="text-3xl md:text-4xl text-muted-foreground font-light tracking-wide mb-16"
+            className="text-3xl md:text-4xl text-muted-foreground font-light tracking-wide mb-8"
           >
             Designing Software That <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">Thinks</span>.
           </motion.p>
+        </div>
+      </section>
 
-          {/* Quick Stats with holographic cards */}
+      {/* Quick Stats MOVED ABOVE LOGO - More visible */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.2 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="mb-16"
           >
             <HolographicCard className="max-w-5xl mx-auto" colorTheme="mixed">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
@@ -804,7 +705,7 @@ const AstraX = () => {
                     key={stat.label}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.4 + index * 0.1 }}
+                    transition={{ delay: 0.5 + index * 0.1 }}
                     className="text-center group"
                   >
                     <motion.div
@@ -832,11 +733,9 @@ const AstraX = () => {
               </div>
             </HolographicCard>
           </motion.div>
-        </div>
-      </section>
 
-      {/* ==================== ABOUT ==================== */}
-      <section id="about" className="relative py-28 md:py-36 scroll-mt-24">
+      {/* ==================== ABOUT (IMPROVED WRITEUP) ==================== */}
+      <section id="about" className="relative py-16 md:py-20 scroll-mt-24">
         <div className="container max-w-[1200px] px-6 mx-auto">
           <SectionHeading
             eyebrow="ABOUT"
@@ -845,11 +744,11 @@ const AstraX = () => {
                 What is <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-500 to-orange-500">AstraX – Software</span>?
               </>
             }
-            description="An AI-first hackathon focused on building intelligent systems that learn, optimize, and redefine efficiency."
+            description="A hackathon by Articon × IEDC, focused on building intelligent systems that learn, optimize, and redefine efficiency."
           />
 
           <div className="grid md:grid-cols-2 gap-8 md:gap-10">
-            {/* Main description */}
+            {/* Main description - IMPROVED WRITEUP */}
             <HolographicCard delay={0} colorTheme="red">
               <div className="flex items-start gap-5 mb-6">
                 <motion.div
@@ -864,17 +763,42 @@ const AstraX = () => {
                     Intelligence First
                   </h3>
                   <p className="text-base text-muted-foreground leading-relaxed">
-                    Build systems that don't just execute—they learn, adapt, and evolve.
+                    A collaboration between Articon, IEDC and IIC
                   </p>
                 </div>
               </div>
 
-              <p className="text-base text-muted-foreground leading-relaxed">
-                AstraX – Software is a 42-hour AI-first hackathon focused on building
-                intelligent systems, scalable platforms, automation frameworks,
-                and next-generation AI-powered software products. Think systems that learn.
-                Think tools that optimize. Think applications that redefine efficiency.
+              <p className="text-base text-muted-foreground leading-relaxed mb-4">
+                <span className="text-cyan-400 font-semibold">AstraX – Software</span> is a 42-hour AI-first hackathon 
+                proudly presented by <span className="text-primary font-semibold">Articon</span>, the flagship technical 
+                organization of the Department of Artificial Intelligence & Data Science at RSET.
               </p>
+              
+              <p className="text-base text-muted-foreground leading-relaxed mb-4">
+                Built on the foundation of innovation and collaboration, AstraX brings together students, developers, 
+                and AI enthusiasts to build <span className="text-foreground font-medium">intelligent systems</span>, 
+                <span className="text-foreground font-medium"> scalable platforms</span>, 
+                <span className="text-foreground font-medium"> automation frameworks</span>, and 
+                <span className="text-foreground font-medium"> next-generation AI-powered software products</span>.
+              </p>
+
+              <p className="text-base text-muted-foreground leading-relaxed">
+                Think systems that <span className="text-cyan-400">learn</span>. 
+                Think tools that <span className="text-cyan-400">optimize</span>. 
+                Think applications that <span className="text-cyan-400">redefine efficiency</span>.
+              </p>
+
+              <div className="mt-6 pt-6 border-t border-white/10">
+                <div className="flex items-center gap-3">
+                  <div className="px-3 py-1.5 rounded-lg bg-primary/10 border border-primary/20">
+                    <span className="text-sm font-mono text-primary tracking-wider">ARTICON</span>
+                  </div>
+                  <span className="text-muted-foreground">×</span>
+                  <div className="px-3 py-1.5 rounded-lg bg-cyan-400/10 border border-cyan-400/20">
+                    <span className="text-sm font-mono text-cyan-400 tracking-wider">IEDC</span>
+                  </div>
+                </div>
+              </div>
             </HolographicCard>
 
             {/* Focus areas */}
@@ -912,7 +836,7 @@ const AstraX = () => {
 
               <div className="mt-8 pt-6 border-t border-white/10">
                 <p className="text-sm text-muted-foreground/80">
-                  Organized by Department of AI & DS, RSET
+                  Organized by Articon in collaboration with IEDC & IIC
                 </p>
               </div>
             </HolographicCard>
@@ -929,14 +853,14 @@ const AstraX = () => {
             <HolographicCard delay={0.2} colorTheme="mixed">
               <div className="flex flex-wrap justify-center gap-4">
                 {[
-                  { text: "AI/ML Engineering", color: "from-primary to-red-500" },
-                  { text: "Deep Learning", color: "from-blue-500 to-purple-500" },
-                  { text: "Natural Language Processing", color: "from-green-500 to-emerald-500" },
+                  { text: "AI/ML Engineering", color: "from-orange-500 to-pink-500"},
+                  { text: "Deep Learning", color: "from-orange-500 to-pink-500" },
+                  { text: "Natural Language Processing", color: "from-orange-500 to-pink-500" },
                   { text: "Computer Vision", color: "from-orange-500 to-pink-500" },
-                  { text: "Intelligent Automation", color: "from-cyan-500 to-blue-500" },
-                  { text: "Predictive Analytics", color: "from-violet-500 to-purple-500" },
-                  { text: "Neural Networks", color: "from-rose-500 to-pink-500" },
-                  { text: "LLM Applications", color: "from-amber-500 to-orange-500" },
+                  { text: "Intelligent Automation", color: "from-orange-500 to-pink-500" },
+                  { text: "Predictive Analytics", color: "from-orange-500 to-pink-500" },
+                  { text: "Neural Networks", color: "from-orange-500 to-pink-500" },
+                  { text: "LLM Applications", color: "from-orange-500 to-pink-500" },
                 ].map((tag, index) => (
                   <motion.div
                     key={tag.text}
@@ -963,136 +887,11 @@ const AstraX = () => {
         </div>
       </section>
 
-      {/* ==================== PRIZES ==================== */} 
-      {/*<section id="prizes" className="relative py-28 md:py-36 scroll-mt-24">
-        <div className="container max-w-[1200px] px-6 mx-auto">
-          <SectionHeading
-            eyebrow="PRIZES"
-            title={
-              <>
-                Win <span className="text-primary">Big</span>. Build <span className="text-blue-500">Smart</span>.
-              </>
-            }
-            description="Cash prizes, certificates, and recognition for the best AI-powered solutions."
-          />
-
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            {[
-              { 
-                place: "1st", 
-                emoji: "🥇", 
-                prize: "₹ TBA", 
-                gradient: "from-yellow-400 via-yellow-500 to-orange-500",
-                glow: "rgba(251, 191, 36, 0.4)"
-              },
-              { 
-                place: "2nd", 
-                emoji: "🥈", 
-                prize: "₹ TBA", 
-                gradient: "from-gray-300 via-gray-400 to-gray-500",
-                glow: "rgba(156, 163, 175, 0.4)"
-              },
-              { 
-                place: "3rd", 
-                emoji: "🥉", 
-                prize: "₹ TBA", 
-                gradient: "from-orange-400 via-orange-500 to-orange-600",
-                glow: "rgba(251, 146, 60, 0.4)"
-              },
-            ].map((tier, index) => (
-              <HolographicCard key={tier.place} delay={index * 0.1} colorTheme={index === 0 ? "red" : index === 1 ? "blue" : "mixed"}>
-                <div className="text-center py-4">
-                  <motion.div
-                    className="text-7xl mb-6"
-                    animate={{
-                      scale: [1, 1.1, 1],
-                      rotate: [0, -5, 5, 0],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      repeatDelay: 1,
-                    }}
-                  >
-                    {tier.emoji}
-                  </motion.div>
-
-                  <div className="font-display text-3xl mb-4 text-foreground">{tier.place} Place</div>
-
-                  <motion.div
-                    className={cn(
-                      "font-display text-4xl md:text-5xl font-bold bg-gradient-to-r bg-clip-text text-transparent mb-2",
-                      tier.gradient
-                    )}
-                    style={{
-                      filter: `drop-shadow(0 0 20px ${tier.glow})`,
-                    }}
-                  >
-                    {tier.prize}
-                  </motion.div>
-
-                  <div className="text-base text-muted-foreground">+ Certificate</div>
-                </div>
-              </HolographicCard>
-            ))}
-          </div> */}
-
-          {/* What participants get */}
-          {/*<HolographicCard delay={0.3} colorTheme="mixed">
-            <h3 className="font-display text-3xl mb-10 text-center text-foreground">What You'll Receive</h3>
-            
-            <div className="grid md:grid-cols-2 gap-10 text-center">
-              {[
-                { 
-                  icon: Database, 
-                  text: "Participation Certificate", 
-                  desc: "Official recognition",
-                  gradient: "from-blue-500 to-cyan-500"
-                },
-                { 
-                  icon: Zap, 
-                  text: "Cash Prizes", 
-                  desc: "For top performers",
-                  gradient: "from-orange-500 to-red-500"
-                },
-              ].map((item, index) => (
-                <motion.div
-                  key={item.text}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 + index * 0.1 }}
-                  whileHover={{ y: -8 }}
-                  className="group cursor-pointer"
-                >
-                  <motion.div
-                    className={cn(
-                      "inline-flex p-5 rounded-3xl bg-gradient-to-br mb-6 shadow-xl",
-                      item.gradient,
-                      "group-hover:shadow-2xl transition-shadow duration-300"
-                    )}
-                    whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <item.icon className="w-10 h-10 text-white" />
-                  </motion.div>
-
-                  <div className="font-display text-xl mb-3 text-foreground">
-                    {item.text}
-                  </div>
-
-                  <div className="text-base text-muted-foreground">
-                    {item.desc}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </HolographicCard>
-        </div>
-      </section> */}
+      {/* ==================== PRIZES (KEPT COMMENTED) ==================== */}
+      {/* Prize section commented out as requested */}
 
       {/* ==================== CONTACTS ==================== */}
-      <section id="contacts" className="relative py-28 md:py-36 scroll-mt-24">
+      <section id="contacts" className="relative py-16 md:py-20 scroll-mt-24">
         <div className="container max-w-[1200px] px-6 mx-auto">
           <SectionHeading
             eyebrow="CONTACTS"
@@ -1123,11 +922,11 @@ const AstraX = () => {
                 colorTheme: "blue",
               },
               {
-                name: "Neha Biju",
+                name: "Shwetha Prabhakaran",
                 role: "General Support",
-                email: "nehabiju605@gmail.com",
-                phone: "+91 96569 14957",
-                phoneLink: "+919656914957",
+                email: "U2301197@rajagiri.edu.in",
+                phone: "+91 90747 80066",
+                phoneLink: "+919074780066",
                 colorTheme: "mixed",
               },
             ].map((contact, index) => (
@@ -1186,7 +985,7 @@ const AstraX = () => {
                 logos={partnerLogos}
                 speed={52}
                 gap={24}
-                pauseOnHover={true}
+                pauseOnHover={false}
                 fadeOut={false}
                 className="mb-10"
               />
@@ -1207,56 +1006,32 @@ const AstraX = () => {
         </div>
       </section>
 
-      {/* ==================== SOCIAL FLOAT - 4 WORKING LINKS ==================== */}
+      {/* ==================== SOCIAL FLOAT - UPDATED THEME MATCHING STYLES ==================== */}
       <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 2 }}
-      className="fixed bottom-8 right-8 flex flex-col gap-4 z-50"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 2 }}
+        className="fixed bottom-8 right-8 flex flex-col gap-3 z-50"
       >
-      {[
-          { 
-          icon: Instagram, 
-          href: "https://www.instagram.com/rsetiedc/", 
-          gradient: "from-pink-500 to-rose-500",
-          label: "Instagram"
-          },
-          { 
-          icon: Linkedin, 
-          href: "https://www.linkedin.com/company/rset-iedc/?originalSubdomain=in", 
-          gradient: "from-blue-600 to-blue-500",
-          label: "LinkedIn"
-          },
-          { 
-          icon: Facebook, 
-          href: "https://www.facebook.com/iedc.rset/", 
-          gradient: "from-blue-500 to-blue-600",
-          label: "Facebook"
-          },
-          { 
-          icon: Twitter, 
-          href: "https://x.com/rset_iedc", 
-          gradient: "from-gray-700 to-black",
-          label: "Twitter/X"
-          },
-      ].map((social, index) => (
+        {[
+          { icon: Instagram, href: "https://www.instagram.com/rsetiedc/", label: "Instagram" },
+          { icon: Linkedin, href: "https://www.linkedin.com/company/rset-iedc/?originalSubdomain=in", label: "LinkedIn" },
+          { icon: Facebook, href: "https://www.facebook.com/iedc.rset/", label: "Facebook" },
+          { icon: Twitter, href: "https://x.com/rset_iedc", label: "Twitter/X" },
+        ].map((social, index) => (
           <motion.a
-          key={index}
-          href={social.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          whileHover={{ scale: 1.15, rotate: 5 }}
-          whileTap={{ scale: 0.9 }}
-          className={cn(
-              "p-4 rounded-2xl backdrop-blur-xl border border-white/10 shadow-2xl",
-              "bg-gradient-to-br",
-              social.gradient
-          )}
-          aria-label={social.label}
+            key={index}
+            href={social.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.1, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            className="p-3 rounded-xl bg-black/40 backdrop-blur-xl border border-primary/20 hover:border-primary/50 hover:bg-primary/10 transition-all shadow-lg hover:shadow-primary/20"
+            aria-label={social.label}
           >
-          <social.icon className="w-6 h-6 text-white" />
+            <social.icon className="w-5 h-5 text-primary" />
           </motion.a>
-      ))}
+        ))}
       </motion.div>
 
       {/* ==================== FOOTER ==================== */}
@@ -1268,7 +1043,7 @@ const AstraX = () => {
             viewport={{ once: true }}
           >
             <p className="text-base text-muted-foreground mb-6">
-              Organized by Department of AI & DS, RSET
+              Organized by Articon × IEDC
             </p>
             <p className="text-sm text-muted-foreground/60">
               © ASTRAX 2026 • Articon × IEDC × IIC
