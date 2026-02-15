@@ -313,7 +313,7 @@ const ScreenX = () => {
                                 role: "Event Coordinator",
                                 phone: "+91 90372 47134",
                                 phoneLink: "+91XXXXXXXXXX",
-                                email: "contact1@example.com",
+                                email: "nevinjohn2003@gmail.com",
                             },
                             {
                                 name: "Alan Isaac",
