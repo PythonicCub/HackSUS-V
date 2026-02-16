@@ -1478,6 +1478,34 @@ const CarbonX = () => {
                 </div>
                 <div>{carbonX.tagline}</div>
               </div>
+
+              <div className="mt-3 border-t border-border/50 pt-3 text-center font-mono text-[9px] uppercase tracking-[0.2em] text-foreground/70 sm:text-[10px] sm:tracking-[0.24em]">
+                <div className="mx-auto flex flex-col items-center justify-center gap-y-1 sm:flex-row sm:gap-x-2 sm:gap-y-0">
+                  <span className="text-muted-foreground/80">Made by</span>
+
+                  <span className="inline-flex flex-col items-center sm:flex-row sm:items-center">
+                    <a
+                      href="https://www.linkedin.com/in/shn101/"
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="whitespace-nowrap text-primary/85 transition hover:text-primary hover:underline underline-offset-4"
+                    >
+                      Sree Harinandan
+                    </a>
+
+                    <span className="hidden sm:inline mx-2 text-primary/45">/</span>
+
+                    <a
+                      href="https://www.linkedin.com/in/arjun-satheesh-382377390?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="whitespace-nowrap text-primary/85 transition hover:text-primary hover:underline underline-offset-4"
+                    >
+                      Arjun Satheesh
+                    </a>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </footer>
