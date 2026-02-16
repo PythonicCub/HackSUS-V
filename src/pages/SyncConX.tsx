@@ -276,7 +276,7 @@ const SyncConX = () => {
                             ].map((stat, i) => (
                                 <SpotlightCard
                                     key={i}
-                                    className="!rounded-xl !p-4 !bg-card/30 !border-white/5 backdrop-blur-sm"
+                                    className="!rounded-xl !p-4 !bg-card/30 !border-white/5 backdrop-blur-sm last:col-span-2 md:last:col-span-1"
                                     spotlightColor="rgba(255, 49, 46, 0.10)"
                                 >
                                     <div className="text-center relative z-10">
