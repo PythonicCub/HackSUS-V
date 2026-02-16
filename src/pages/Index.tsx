@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate, useNavigationType } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -22,11 +23,37 @@ import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [isKruizeXOpen, setIsKruizeXOpen] = useState(false);
+  const navigate = useNavigate();
+  const navigationType = useNavigationType();
 
   useEffect(() => {
-    // Open KruizeX pop-up on page load
-    setIsKruizeXOpen(true);
-  }, []);
+    const popupSeenKey = "hacksus:kruizex-popup-seen";
+    const scrollKey = "hacksus:index-scroll-y";
+
+    // Restore scroll position when user returns with browser history navigation.
+    if (navigationType === "POP") {
+      const savedScrollY = sessionStorage.getItem(scrollKey);
+      if (savedScrollY) {
+        window.requestAnimationFrame(() => {
+          window.scrollTo({ top: Number(savedScrollY), behavior: "auto" });
+        });
+      }
+    } else {
+      // Fresh entry to the page should start from the top.
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+
+    // Show popup only once per tab/session to avoid repeated interruptions.
+    const hasSeenPopup = sessionStorage.getItem(popupSeenKey) === "1";
+    if (!hasSeenPopup) {
+      setIsKruizeXOpen(true);
+      sessionStorage.setItem(popupSeenKey, "1");
+    }
+
+    return () => {
+      sessionStorage.setItem(scrollKey, String(window.scrollY));
+    };
+  }, [navigationType]);
 
   return (
     <>
@@ -73,7 +100,7 @@ const Index = () => {
           <DialogFooter className="flex gap-3">
             <Button
               onClick={() => {
-                window.location.href = "/kruizex";
+                navigate("/kruizex");
               }}
               className="flex-1 bg-[#2563eb] hover:bg-[#2563eb] !focus:ring-[#2563eb] !focus:ring-offset-0 !ring-[#2563eb]"
             >
