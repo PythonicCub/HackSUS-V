@@ -57,7 +57,7 @@ const HeroSection = () => {
         {/* Main title */}
         <h1
           className="font-BrittanicBold text-6xl sm:text-7xl md:text-7xl lg:text-[6.5rem] leading-none mb-0 animate-fade-in select-none flex justify-center w-full"
-          style={{ animationDelay: "0.4s" }}
+          style={{ animationDelay: "0.5s" }}
         >
           <HackSUSTitle />
         </h1>

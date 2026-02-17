@@ -57,7 +57,7 @@ function NeuralNetwork() {
         const dx = mouseRef.current.x - node.x;
         const dy = mouseRef.current.y - node.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        
+
         if (dist < 150) {
           node.x -= dx * 0.01;
           node.y -= dy * 0.01;
@@ -203,8 +203,8 @@ function HolographicCard({ className, children, delay = 0, colorTheme = "red" })
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
         "relative overflow-hidden rounded-2xl border transition-all duration-500",
-        isHovered 
-          ? "border-primary/40 bg-black/60 shadow-[0_0_60px_rgba(255,49,46,0.15)]" 
+        isHovered
+          ? "border-primary/40 bg-black/60 shadow-[0_0_60px_rgba(255,49,46,0.15)]"
           : "border-white/10 bg-black/40",
         className
       )}
@@ -316,9 +316,9 @@ function AstraXNavbar({ activeId, items, onNavigate }) {
             whileTap={{ scale: 0.95 }}
             className="flex items-center text-foreground/90 hover:text-foreground transition-colors"
           >
-            <img 
-              src="/images/hacksus_logo.webp" 
-              alt="Hacks'us" 
+            <img
+              src="/images/hacksus_logo.webp"
+              alt="Hacks'us"
               className="h-10 w-10 md:h-11 md:w-11 object-contain"
             />
           </motion.a>
@@ -360,10 +360,10 @@ function AstraXNavbar({ activeId, items, onNavigate }) {
               scaleX: indicator.width / 100,
               opacity: indicator.opacity,
             }}
-            transition={{ 
-              type: "spring", 
-              stiffness: 400, 
-              damping: 30, 
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 30,
               mass: 0.5,
             }}
           />
@@ -380,8 +380,8 @@ function AstraXNavbar({ activeId, items, onNavigate }) {
               }}
               className={cn(
                 "relative text-sm tracking-[0.3em] uppercase transition-all duration-300 font-medium",
-                activeId === it.id 
-                  ? "text-primary scale-105" 
+                activeId === it.id
+                  ? "text-primary scale-105"
                   : "text-muted-foreground hover:text-foreground hover:scale-105"
               )}
             >
@@ -482,7 +482,7 @@ const AstraX = () => {
   const partnerLogos = useMemo(
     () => [
       { node: <img src="/images/rset_iedc.PNG" alt="IEDC" className="h-16 w-auto object-contain opacity-90" />, ariaLabel: "IEDC" },
-      { node: <img src="/images/rset_iic.PNG" alt="IIC" className="h-16 w-auto object-contain opacity-90" />, ariaLabel: "IIC" },
+      { node: <img src="/images/iic_logo.png" alt="IIC" className="h-16 w-auto object-contain opacity-90" />, ariaLabel: "IIC" },
       { node: <img src="/images/articon_logo.png" alt="Articon" className="h-16 w-auto object-contain opacity-90" />, ariaLabel: "Articon" },
       { node: <img src="/images/rset_jubilee.png" alt="RSET Jubilee" className="h-16 w-auto object-contain opacity-90" />, ariaLabel: "RSET Jubilee" },
     ],
@@ -549,21 +549,21 @@ const AstraX = () => {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-900 via-black to-black" />
 
         {/* Subtle gradient orbs - STATIC for performance */}
-        <div 
+        <div
           className="absolute top-0 -left-1/4 w-[600px] h-[600px] rounded-full blur-[120px] opacity-8"
           style={{
             background: "radial-gradient(circle, rgba(255,49,46,0.3) 0%, transparent 70%)",
           }}
         />
 
-        <div 
+        <div
           className="absolute bottom-0 -right-1/4 w-[500px] h-[500px] rounded-full blur-[100px] opacity-10"
           style={{
             background: "radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%)",
           }}
         />
 
-        <GraphNetwork 
+        <GraphNetwork
           gridSpacing={50}
           mouseRadius={300}
           strength={0.8}
@@ -624,8 +624,8 @@ const AstraX = () => {
                   <motion.div
                     key={`${animationKey}-${index}`}
                     initial={{ x: 200, opacity: 0, scale: 0.5 }}
-                    animate={{ 
-                      x: 0, 
+                    animate={{
+                      x: 0,
                       opacity: 1,
                       scale: [0.5, 1.15, 0.97, 1],
                     }}
@@ -825,22 +825,22 @@ const AstraX = () => {
               </div>
 
               <p className="text-base text-muted-foreground leading-relaxed mb-4">
-                <span className="text-cyan-400 font-semibold">AstraX – Software</span> is a 42-hour AI-first hackathon 
-                proudly presented by <span className="text-primary font-semibold">Articon</span>, the flagship technical 
+                <span className="text-cyan-400 font-semibold">AstraX – Software</span> is a 42-hour AI-first hackathon
+                proudly presented by <span className="text-primary font-semibold">Articon</span>, the flagship technical
                 organization of the Department of Artificial Intelligence & Data Science at RSET.
               </p>
-              
+
               <p className="text-base text-muted-foreground leading-relaxed mb-4">
-                Built on the foundation of innovation and collaboration, AstraX brings together students, developers, 
-                and AI enthusiasts to build <span className="text-foreground font-medium">intelligent systems</span>, 
-                <span className="text-foreground font-medium"> scalable platforms</span>, 
-                <span className="text-foreground font-medium"> automation frameworks</span>, and 
+                Built on the foundation of innovation and collaboration, AstraX brings together students, developers,
+                and AI enthusiasts to build <span className="text-foreground font-medium">intelligent systems</span>,
+                <span className="text-foreground font-medium"> scalable platforms</span>,
+                <span className="text-foreground font-medium"> automation frameworks</span>, and
                 <span className="text-foreground font-medium"> next-generation AI-powered software products</span>.
               </p>
 
               <p className="text-base text-muted-foreground leading-relaxed">
-                Think systems that <span className="text-cyan-400">learn</span>. 
-                Think tools that <span className="text-cyan-400">optimize</span>. 
+                Think systems that <span className="text-cyan-400">learn</span>.
+                Think tools that <span className="text-cyan-400">optimize</span>.
                 Think applications that <span className="text-cyan-400">redefine efficiency</span>.
               </p>
 
@@ -860,7 +860,7 @@ const AstraX = () => {
             {/* Focus areas */}
             <HolographicCard delay={0.1} colorTheme="blue">
               <h3 className="font-display text-2xl mb-6 text-foreground">Technical Focus</h3>
-              
+
               <div className="space-y-4">
                 {[
                   { icon: Cpu, text: "Intelligent Systems & AI/ML", color: "from-primary to-red-500" },
@@ -907,7 +907,7 @@ const AstraX = () => {
                 {[
                   { text: "AI/ML Engineering", color: "from-orange-500 to-pink-500" },
                   { text: "Deep Learning", color: "from-orange-500 to-pink-500" },
-                  { text: "Natural Language Processing", color: "from-orange-500 to-pink-500"},
+                  { text: "Natural Language Processing", color: "from-orange-500 to-pink-500" },
                   { text: "Computer Vision", color: "from-orange-500 to-pink-500" },
                   { text: "Intelligent Automation", color: "from-orange-500 to-pink-500" },
                   { text: "Predictive Analytics", color: "from-orange-500 to-pink-500" },
@@ -1119,7 +1119,7 @@ const AstraX = () => {
                 <div className="font-display text-3xl mb-8 text-foreground">
                   {contact.name}
                 </div>
-                
+
                 <div className="space-y-4">
                   <motion.a
                     href={`mailto:${contact.email}`}
@@ -1131,7 +1131,7 @@ const AstraX = () => {
                       {contact.email}
                     </div>
                   </motion.a>
-                  
+
                   <motion.a
                     href={`tel:${contact.phoneLink}`}
                     whileHover={{ scale: 1.02, x: 4 }}
