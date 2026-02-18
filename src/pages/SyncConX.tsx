@@ -192,7 +192,7 @@ const SyncConX = () => {
                                 initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
                                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                                 transition={{ duration: 1.2, ease: "easeOut" }}
-                                className="font-display text-8xl md:text-[10rem] text-white font-bold leading-none mb-4 tracking-normal"
+                                className="font-display text-7xl md:text-[10rem] text-white font-bold leading-none mb-4 tracking-normal"
                             >
                                 SYNCCONX
                             </motion.h1>
@@ -418,12 +418,12 @@ const SyncConX = () => {
                                             icon: Activity,
                                             id: "REQ_B",
                                         },
-                                        {
-                                            title: "Biomedical Instrumentation",
-                                            desc: "Instrumentation in Biomedical Technology",
-                                            icon: Cpu,
-                                            id: "REQ_C",
-                                        },
+                                        // {
+                                        //     title: "Biomedical Instrumentation",
+                                        //     desc: "Instrumentation in Biomedical Technology",
+                                        //     icon: Cpu,
+                                        //     id: "REQ_C",
+                                        // },
                                         {
                                             title: "Robot Telemetry",
                                             desc: "Robot telemetry (encoders/IMU), motor current sensing",
@@ -453,7 +453,7 @@ const SyncConX = () => {
                             <DimensionLine label="Ω: 4.7kΩ" orientation="horizontal" className="opacity-30" />
 
                             {/* Judging Criteria */}
-                            <motion.section
+                            {/* <motion.section
                                 whileInView={{ opacity: 1, y: 0 }}
                                 initial={{ opacity: 0, y: 40 }}
                                 viewport={{ once: true }}
@@ -509,7 +509,7 @@ const SyncConX = () => {
                                         </motion.div>
                                     ))}
                                 </div>
-                            </motion.section>
+                            </motion.section> */}
                         </div>
 
                         {/* Sidebar — Instrument Panel style */}
