@@ -473,7 +473,7 @@ const AstraX = () => {
     ],
     []
   );
- 
+
   // Problem statements data
   const problemStatements = useMemo(() => [
     {
@@ -923,7 +923,7 @@ const AstraX = () => {
             </HolographicCard>
           </div>
 
-          {/* ==================== PROBLEM STATEMENTS (REPLACED BADGE SECTION) ====================
+          {/* ==================== PROBLEM STATEMENTS (REPLACED BADGE SECTION) ==================== */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -996,7 +996,7 @@ const AstraX = () => {
                 </p>
               </div>
             </HolographicCard>
-          </motion.div> */}
+          </motion.div>
         </div>
       </section>
 
