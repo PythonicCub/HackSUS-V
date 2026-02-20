@@ -133,7 +133,7 @@ function KonfHubRegistration() {
           color: white !important;
           font-family: inherit !important;
           font-weight: 700 !important;
-          font-size: 1.125rem !important;
+          font-size: 1rem !important;
           padding: 0 3rem !important;
           height: 4rem !important;
           border-radius: 1rem !important;
