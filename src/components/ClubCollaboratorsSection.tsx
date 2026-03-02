@@ -7,6 +7,13 @@ const collaborators = [
         link: "/astraX"
     },
     {
+        name: "Apptronics",
+        logo: "/images/apptronics.webp",
+        link: "/syncconx",
+        scale: 1.4,
+        cardClassName: "bg-[#F9F9F9]"
+    },
+    {
         name: "eNauts",
         logo: "/images/enauts.svg",
         maxWidth: "175px",
@@ -14,6 +21,19 @@ const collaborators = [
         scale: 1.8,
         mobileScale: 1.2,
         link: "/carbonx"
+    },
+    {
+        name: "Eluxtra",
+        logo: "/images/eluxtra.webp",
+        link: "/syncconx",
+        scale: 1.4
+    },
+    {
+        name: "ICI",
+        logo: "/images/ici.webp",
+        link: "/helix",
+        scale: 1.2,
+        cardClassName: "bg-[#F9F9F9]"
     }
 ];
 
@@ -40,18 +60,22 @@ export default function ClubCollaboratorsSection() {
                     </div>
                 </motion.div>
 
-                {/* Logo Grid - Using the same responsive grid as others */}
-                <motion.div
-                    initial={{ opacity: 0, y: 24 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-60px" }}
-                    transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-                    className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
-                >
-                    {collaborators.map((collaborator, index) => (
-                        <CollaboratorCard key={collaborator.name} collaborator={collaborator} index={index} />
-                    ))}
-                </motion.div>
+                {/* Logo Grid - Flexible wrap for 3/2 desktop and 2/2/1 mobile */}
+                <div className="flex justify-center w-full">
+                    <motion.div
+                        initial={{ opacity: 0, y: 24 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-60px" }}
+                        transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+                        className="flex flex-wrap justify-center gap-4 md:gap-6 max-w-[960px]"
+                    >
+                        {collaborators.map((collaborator, index) => (
+                            <div key={collaborator.name} className="w-[calc(50%-8px)] md:w-[280px]">
+                                <CollaboratorCard collaborator={collaborator} index={index} />
+                            </div>
+                        ))}
+                    </motion.div>
+                </div>
             </div>
         </section>
     );

@@ -5,12 +5,14 @@ const sponsors = [
     name: "Udbhava",
     logo: "/images/udbhava.PNG",
     cardClassName: "bg-[#adb5bd]",
-    link: "https://udbhava.co/"
+    link: "https://udbhava.co/",
+    scale: 1.2
   },
   {
     name: "Evolve",
     logo: "/images/evolve.PNG",
-    link: "https://www.evolveroboticsindia.com/"
+    link: "https://www.evolveroboticsindia.com/",
+    scale: 1.2
   },
   {
     name: "CDAC",
@@ -35,7 +37,27 @@ const sponsors = [
   {
     name: "Zendt",
     logo: "/images/zendt.PNG",
-    link: "https://www.zendtpayments.com/"
+    link: "https://www.zendtpayments.com/",
+    scale: 1.3
+  },
+  {
+    name: "Geotech",
+    logo: "/images/geotech.webp",
+    link: "",
+    scale: 1.2,
+    cardClassName: "bg-[#F9F9F9]"
+  },
+  {
+    name: "Zach AI",
+    logo: "/images/zachAI.webp",
+    link: "",
+    scale: 1.8,
+    cardClassName: "bg-[#F1EFE7]"
+  },
+  {
+    name: "CDISC",
+    logo: "/images/cdisc.webp",
+    link: ""
   }
 ];
 
@@ -62,17 +84,38 @@ export default function SponsorsSection() {
           </div>
         </motion.div>
 
-        {/* Logo Grid - 4 columns on desktop */}
+        {/* Logo Rows - Using flex for 4/4/2 split */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
+          className="flex flex-col gap-4 md:gap-6"
         >
-          {sponsors.map((sponsor, index) => (
-            <SponsorCard key={sponsor.name} sponsor={sponsor} index={index} />
-          ))}
+          {/* First Row: 4 Logos */}
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+            {sponsors.slice(0, 4).map((sponsor, index) => (
+              <div key={sponsor.name} className="w-[calc(50%-8px)] md:w-[260px]">
+                <SponsorCard sponsor={sponsor} index={index} />
+              </div>
+            ))}
+          </div>
+          {/* Second Row: 4 Logos */}
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+            {sponsors.slice(4, 8).map((sponsor, index) => (
+              <div key={sponsor.name} className="w-[calc(50%-8px)] md:w-[260px]">
+                <SponsorCard sponsor={sponsor} index={index + 4} />
+              </div>
+            ))}
+          </div>
+          {/* Third Row: 2 Logos */}
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+            {sponsors.slice(8).map((sponsor, index) => (
+              <div key={sponsor.name} className="w-[calc(50%-8px)] md:w-[260px]">
+                <SponsorCard sponsor={sponsor} index={index + 8} />
+              </div>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>
