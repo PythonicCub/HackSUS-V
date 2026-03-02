@@ -64,7 +64,7 @@ const columns: TrackColumn[] = [
                 title: "Civil Workshop",
                 date: "07 - Feb - 2026",
                 time: "2 PM - 3 PM",
-                location: "Sajeesh K",
+                location: "Quantum Lab, 1st Floor, Main Block",
                 instructors: ["From CDISC Tech"],
                 status: "open",
                 registrationLink: "https://konfhub.com/hacksus-workshops",
