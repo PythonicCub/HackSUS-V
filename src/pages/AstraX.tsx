@@ -769,10 +769,10 @@ const AstraX = () => {
             </div>
             <div className="flex items-center justify-center gap-8 md:gap-12 flex-wrap">
               <img
-  src="/images/zachAI.webp"
-  alt="Zach AI"
-  style={{ height: "160px", width: "160px", objectFit: "contain" }}
-/>
+                src="/images/zachAI.webp"
+                alt="Zach AI"
+                style={{ height: "160px", width: "160px", objectFit: "contain" }}
+              />
               <div className="w-px h-10 bg-white/15 hidden sm:block" />
               <img
                 src="/images/ylogxLogo.png"
