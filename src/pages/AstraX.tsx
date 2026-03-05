@@ -575,11 +575,19 @@ const AstraX = () => {
     },
     {
       number: "05",
-      title: "A Pet Portrait App Makes $100K/Month. What's Your Excuse?",
+      title: "AI-Powered Consumer App Sprint: Build the Next $100K Solo Product",
       pdfPath: "/docs/Astrax_Problem_Statements/Title5.pdf",
       gradient: "from-primary to-red-600",
       glowColor: "rgba(255,49,46,0.3)",
       company: "Zach AI",
+    },
+    {
+      number: "06",
+      title: "AI-Driven Intelligent Caregiver Workload Optimization Engine for Elderly Care",
+      pdfPath: "/docs/Astrax_Problem_Statements/Title6.pdf",
+      gradient: "from-primary to-red-600",
+      glowColor: "rgba(255,49,46,0.3)",
+      company: "careMP",
     },
   ], []);
 
@@ -737,7 +745,7 @@ const AstraX = () => {
               <img
                 src="/images/AWS_logo.png"
                 alt="Amazon Web Services"
-                className="h-16 md:h-20 w-auto object-contain"
+                className="h-20 md:h-24 w-auto object-contain"
                 style={{ filter: "brightness(1.3) contrast(1.1)" }}
               />
               <div className="w-px h-10 bg-white/15" />
@@ -745,7 +753,7 @@ const AstraX = () => {
                 <img
                   src="/images/GDG_Cloud_Kochi_logo.png"
                   alt="GDG Cloud Kochi"
-                  className="h-10 md:h-14 w-auto max-w-[150px] md:max-w-[190px] object-contain"
+                  className="h-20 md:h-14 w-auto max-w-[150px] md:max-w-[190px] object-contain"
                 />
               </div>
             </div>
@@ -777,13 +785,19 @@ const AstraX = () => {
               <img
                 src="/images/ylogxLogo.png"
                 alt="YlogX"
-                className="h-14 md:h-16 w-auto object-contain opacity-90"
+                className="h-20 md:h-24 w-auto object-contain opacity-90"
               />          
               <div className="w-px h-10 bg-white/15 hidden sm:block" />
               <img
                 src="/images/zendt.PNG"
                 alt="Zendt"
-                className="h-14 md:h-16 w-auto object-contain opacity-90"
+                className="h-20 md:h-24 w-auto object-contain opacity-90"
+              />
+              <div className="w-px h-10 bg-white/15 hidden sm:block" />
+              <img
+                src="/images/Moozhayil_logo.png"
+                alt="Moozhayil"
+                className="h-24 md:h-28 w-auto object-contain opacity-90"
               />
             </div>
           </motion.div>
@@ -1084,7 +1098,7 @@ const AstraX = () => {
               <div className="mt-6 pt-5 border-t border-white/10 flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                 <p className="text-xs font-mono text-muted-foreground/60 tracking-wider">
-                  5 PROBLEM STATEMENTS AVAILABLE · CLICK TO OPEN PDF
+                  6 PROBLEM STATEMENTS AVAILABLE · CLICK TO OPEN PDF
                 </p>
               </div>
             </HolographicCard>
@@ -1169,6 +1183,39 @@ const AstraX = () => {
           </div>
         </div>
       </section >
+
+      {/* ==================== COLLABORATORS ==================== */}
+      <section className="relative py-16 md:py-20 border-t border-white/5">
+        <div className="container max-w-[1200px] px-6 mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+            className="flex flex-col items-center gap-3"
+          >
+            <div className="flex items-center gap-4 w-full max-w-lg">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-amber-400/40 to-amber-400/60" />
+              <span className="font-mono text-[12px] md:text-[13px] tracking-[0.5em] text-primary/90 uppercase whitespace-nowrap">
+                Collaborators
+              </span>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent via-amber-400/40 to-amber-400/60" />
+            </div>
+            <div className="flex items-center justify-center gap-8 md:gap-12 flex-wrap">
+            <img
+              src="/images/zappyhire_logo.png"
+              alt="ZappyHire"
+              className="h-14 md:h-16 w-auto object-contain opacity-90"
+            />
+            <div className="w-px h-10 bg-white/15" />
+            <img
+              src="/images/careMP_logo.png"
+              alt="careMP"
+              className="h-14 md:h-16 w-auto object-contain opacity-90"
+            />
+          </div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* ==================== PARTNERS ==================== */}
       < section className="relative py-28 border-t border-white/5" >
